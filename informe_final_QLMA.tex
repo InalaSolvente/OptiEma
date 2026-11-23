@@ -1,0 +1,395 @@
+% Informe autónomo con datos finales. Requiere paquetes estándar, incluido pgfplots.
+% Compilar: pdflatex informe_final_QLMA.tex (dos veces), o tectonic informe_final_QLMA.tex.
+% Las secciones 1--3 conservan y revisan el contenido sustantivo de la Entrega 2.
+% Las secciones 4 y 5 ocupan, respectivamente, tres páginas y una página.
+% Valores medidos: 6960 corridas finales, 3998 llamadas reales de calibración.
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[margin=2.3cm]{geometry}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{1.15em}
+\setlength{\parskip}{1.5pt}
+\linespread{0.96}
+\setlength{\emergencystretch}{2em}
+\setlist{nosep,leftmargin=*}
+\captionsetup{font=small,labelfont=bf,hypcap=false}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\ND}{\textsf{ND}}
+\newcommand{\Cmax}{C_{\max}}
+\newcommand{\Emax}{E_{\max}}
+\newcommand{\gstag}{g_{\mathrm{stag}}}
+\newcounter{algorithm}
+\newcommand{\nota}[1]{\begin{quote}\small\textbf{Estado de la evidencia.} #1\end{quote}}
+\title{\small OII464: Desarrollo de Diseños Híbridos para Optimización\\[7pt]
+\Large Diseño híbrido basado en algoritmo memético y selección adaptativa de operadores mediante Q-Learning para la programación quirúrgica con bloqueo y recursos duales\\[5pt]
+\normalsize Informe final y evaluación experimental}
+\author{Sebastián Casas, Felipe Rojo, Benjamín Espinoza y Cristobal Martinez\\
+\small Escuela de Ingeniería Informática\\
+\small Pontificia Universidad Católica de Valparaíso, Valparaíso, Chile\\
+\small Profesor: Emanuel Vega}
+\date{Noviembre de 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Se estudia la programación quirúrgica determinista de dos etapas con bloqueo y recursos duales. QL-MA combina un algoritmo memético con Q-Learning en línea sobre 27 estados y siete operadores. Se preserva el diseño de la Entrega 2 y se precisa un evaluador común con reserva conjunta de salas, limpieza final y exclusión de especialistas. La evaluación utiliza 29 instancias sintéticas de prueba, 30 semillas y ocho métodos o variantes, para 6960 corridas estructuralmente factibles. El presupuesto ejecutado es de $200n$ evaluaciones por corrida, revisado en un piloto separado, y la calibración consume 3998 llamadas de irace. El RPD medio de QL-MA es 22,59\,\%, frente a 55,27--121,25\,\% de los cuatro métodos base. Sin embargo, el memético con probabilidades fijas calibradas alcanza 14,72\,\% y supera a QL-MA en la media de las 29 instancias. El aprendizaje no demuestra una ventaja global frente a la selección uniforme ni la diversificación frente a su ablación. Las conclusiones se restringen al banco, al decodificador y al presupuesto evaluados; no se infieren beneficios clínicos ni optimalidad.
+\end{abstract}
+\noindent\textbf{Palabras clave:} programación quirúrgica, bloqueo, recursos duales, algoritmo memético, Q-Learning, selección de operadores.
+
+\nota{El informe integra los resultados efectivamente registrados del repositorio del curso y de la implementación del grupo. Los cambios de la Entrega 2 quedan identificados: preparación/transición explícita, limpieza por operación, $H=480$ min, presupuesto revisado de $2000n$ a $200n$ y ejecución con cuatro procesos de un hilo. El paquete reproducible conserva instancias, semillas, parámetros, calendarios, curvas y manifiestos. La factibilidad se refiere a las restricciones implementadas, no a una validación clínica.}
+
+\section{Introducción}
+\subsection*{Motivación y delimitación del problema}
+La planificación y programación de quirófanos considera decisiones interdependientes sobre pacientes, salas y personal especializado \cite{cardoen}. En este trabajo cada cirugía electiva comprende dos etapas: inducción anestésica y procedimiento quirúrgico. Cada etapa requiere simultáneamente una sala elegible y un especialista de dedicación exclusiva, anestesiólogo o cirujano, respectivamente. Se adopta una variante de programación de dos etapas inspirada en el \emph{Flexible Flow Shop}, con bloqueo y recursos humanos adicionales. Como ambas etapas pueden compartir la misma sala física, su capacidad se controla conjuntamente; no se presupone que existan dos conjuntos de máquinas independientes.
+
+La ausencia de un buffer intermedio obliga al paciente anestesiado a permanecer en la sala de inducción hasta poder comenzar la segunda etapa. Esa ocupación impide utilizar la sala para otra cirugía, incluso si el anestesiólogo ya quedó libre. El bloqueo puede aumentar esperas y la duración de la programación. El modelo permite estudiar estos efectos operativos, pero no representa ni demuestra consecuencias clínicas individuales.
+
+\subsection*{Brecha y limitaciones de los enfoques actuales}
+El espacio de decisiones combina permutaciones, asignaciones y restricciones de capacidad. Este carácter combinatorio motiva el uso de metaheurísticas, sin que se presente aquí una demostración de complejidad para la variante exacta estudiada. GA y PSO admiten numerosas adaptaciones; en particular, las versiones con parámetros y selección de operadores fijos pueden responder de manera limitada a cambios en el bloqueo durante la búsqueda. El posible desperdicio de evaluaciones y el estancamiento son hipótesis por evaluar, no resultados establecidos para todos estos métodos.
+
+\subsection*{Estado del arte}
+Cardoen et al.\ \cite{cardoen} organizan la literatura de programación de quirófanos. Aringhieri et al.\ \cite{aringhieri} estudian la planificación y asignación conjunta mediante una metaheurística de dos niveles; Addis et al.\ \cite{addis} abordan programación y reprogramación con horizonte rodante. Estos antecedentes justifican atender la coordinación de recursos, pero no prueban por sí solos la ausencia de diseños adaptativos en toda la literatura.
+
+Karimi-Mamaghan et al.\ \cite{karimi} revisan la integración de aprendizaje automático en metaheurísticas. Zhao et al.\ \cite{zhao} constituyen un antecedente de hiperheurísticas con Q-Learning para un flow shop industrial con bloqueo. Los métodos asistidos por sustitutos \cite{jin} persiguen un objetivo distinto, reducir el costo de las evaluaciones. La contribución propuesta se delimita a estudiar la selección en línea de operadores orientados al bloqueo y al desbalance en este modelo quirúrgico. La revisión disponible no permite afirmar una primicia absoluta.
+
+\subsection*{Objetivo y contribución}
+El objetivo es especificar y evaluar QL-MA (\emph{Q-Learning Guided Memetic Algorithm}) para minimizar una función que combina makespan, espera y desbalance. Se mantienen cuatro contribuciones de diseño:
+\begin{enumerate}
+\item un algoritmo memético con selección adaptativa de operadores y recompensa dependiente de mejora y factibilidad;
+\item un estado de 27 configuraciones que resume fase, estancamiento y cuello de botella;
+\item siete operadores de secuenciación y reasignación orientados al problema;
+\item un protocolo con calibración, presupuesto comparable, ablación y análisis estadístico.
+\end{enumerate}
+La pregunta experimental es si, con igual presupuesto de evaluación, QL-MA obtiene menor función objetivo que los métodos de comparación y si su aprendizaje aporta valor frente a un selector sin aprendizaje. La mejora de makespan, espera y estabilidad se analiza por separado.
+
+\section{Propuesta (Proposed Approach)}
+\subsection{Problema y supuestos}
+Sean $J=\{1,\ldots,n\}$ las cirugías, $R=\{1,\ldots,m\}$ los quirófanos y $K=\{1,2\}$ las etapas. La operación $(j,k)$ tiene duración determinista $p_{j,k}>0$, preparación $T^{\mathrm{setup}}_{j,k}\geq0$ y limpieza de duración $L_{j,k}=T^{\mathrm{clean}}_{j,k}\geq0$. Sus conjuntos de elegibilidad son $R_{j,k}\subseteq R$ y $Q_{j,k}\subseteq Q_{\mathrm{AN}}\cup Q_{\mathrm{SU}}$, con el tipo de especialista correspondiente a cada etapa. Se asigna una sala $r_{j,k}\in R_{j,k}$ y un especialista $q_{j,k}\in Q_{j,k}$.
+
+Se consideran cirugías electivas disponibles al inicio, sin interrupciones, traslados de duración despreciable y un único especialista por operación. No se modelan urgencias, camas posoperatorias, turnos del personal ni incertidumbre de duración. El horizonte diario $H=480$ min normaliza la utilización; no es una fecha límite de factibilidad, salvo que una instancia establezca expresamente esa restricción. Se admite sobretiempo. La dedicación del especialista se restringe aquí a la operación; ampliar su permanencia durante bloqueo, preparación o limpieza requeriría modificar el modelo y validar el supuesto clínico.
+
+\paragraph{Precedencia y bloqueo.}
+Los tiempos se expresan en minutos. Sea $t_{j,k}$ el tiempo auxiliar de transición de la instancia. Siguiendo la convención docente, la preparación efectiva es $d_{j,1}=\max(T^{\mathrm{setup}}_{j,1},t_{j,1})$ y $d_{j,2}=T^{\mathrm{setup}}_{j,2}+t_{j,2}$. Sean $s_{j,k}$ el inicio de atención, $c_{j,k}=s_{j,k}+p_{j,k}$ su término y $b_{j,k}=s_{j,k}-d_{j,k}\geq0$ el inicio de preparación. Estos tiempos auxiliares no representan un traslado adicional medido. La precedencia exige
+\begin{equation}
+s_{j,2}\geq c_{j,1},\qquad W_j=s_{j,2}-c_{j,1}\geq0.
+\label{eq:precedencia}
+\end{equation}
+Esta desigualdad por sí sola no impone bloqueo. Si las salas son diferentes, sus intervalos de ocupación por la cirugía $j$ son
+\begin{equation}
+I_{j,1}=[b_{j,1},s_{j,2}+L_{j,1}),\qquad
+I_{j,2}=[b_{j,2},c_{j,2}+L_{j,2}).
+\label{eq:intervalos}
+\end{equation}
+La sala de inducción permanece retenida hasta $s_{j,2}$ y solo entonces comienza su limpieza. La preparación de la sala de destino puede adelantarse si está disponible. Si ambas etapas usan la misma sala, se contabiliza un único intervalo $[b_{j,1},c_{j,2}+L_{j,2})$, se exige $b_{j,2}\geq c_{j,1}$ y se asume que no hay limpieza entre etapas del mismo paciente. Esta es la convención implementada en el evaluador común del estudio. Los valores de \texttt{max\_wait} del YAML se auditan como metadatos; no son límites duros de este modelo penalizado. En ella, $W_j$ puede incluir preparación de la segunda etapa y no equivale exclusivamente a espera por un cirujano.
+
+Los intervalos de cirugías distintas asignados a una misma sala deben ser disjuntos, incluidos preparación, bloqueo y limpieza. Para un especialista, los intervalos $[s_{j,k},c_{j,k})$ de las operaciones que atiende también deben ser disjuntos. Estas condiciones, junto con elegibilidad, precedencia y completitud de todas las cirugías, definen la factibilidad del calendario.
+
+\paragraph{Función objetivo.}
+El final operativo considera la liberación de todas las salas:
+\begin{equation}
+\Cmax=\max\left\{\max_{j\in J}(c_{j,2}+L_{j,2}),\;
+\max_{j:\,r_{j,1}\ne r_{j,2}}(s_{j,2}+L_{j,1})\right\},
+\label{eq:makespan}
+\end{equation}
+omitiendo el segundo máximo si su conjunto es vacío. La definición original $\max_j(c_{j,2}+L_{j,2})$ es equivalente solo si ninguna limpieza de inducción termina después. La ecuación \eqref{eq:makespan} hace explícita esa condición, que debe aplicarse a todos los algoritmos antes de comparar resultados.
+
+Para cada sala $r$, sea $B_r$ la medida de la unión de sus intervalos de ocupación, $u_r=B_r/H$ y $\bar u=m^{-1}\sum_r u_r$. Se define
+\begin{equation}
+\Psi=\sqrt{\frac{1}{m}\sum_{r\in R}(u_r-\bar u)^2}
++\frac{|\{r\in R:B_r=0\}|}{m}.
+\label{eq:balance}
+\end{equation}
+Se usa la desviación estándar poblacional de las salas y no se duplica la ocupación cuando se co-localizan etapas. Con sobretiempo, $u_r$ puede superar uno. El objetivo conserva la estructura y los pesos de la Entrega 2:
+\begin{equation}
+\min_{x\in\mathcal X_{\mathrm{fact}}} f(x)=\Cmax
++\eta\sum_{j\in J}\sum_{k\in K}s_{j,k}
++\beta\sum_{j\in J}W_j+\gamma_W\max_{j\in J}W_j+\delta\Psi,
+\label{eq:objetivo}
+\end{equation}
+con $\eta=10^{-6}$, $\beta=0{,}5$, $\gamma_W=1{,}4$ y $\delta=100$. El subíndice de $\gamma_W$ evita confundirlo con el descuento del agente. Los tiempos y $H$ se expresan en minutos. Así, $\delta$ tiene unidades de tiempo y el resto de los pesos es adimensional. $\eta$ incentiva inicios tempranos, pero no implementa un desempate lexicográfico exacto. Los pesos expresan preferencias operativas; no constituyen umbrales clínicos validados.
+
+\subsection{Idea general y componentes}
+QL-MA acopla un algoritmo memético con un selector de operadores aprendido en línea (Figura~\ref{fig:arquitectura}). El evaluador transforma cada candidato en un calendario y devuelve $f$, factibilidad y diagnósticos. No se necesita preentrenamiento; la tabla Q se reinicia en cada corrida.
+\begin{center}
+\fbox{\begin{minipage}{0.92\linewidth}\centering\small
+\textbf{Algoritmo memético}\\
+Población $(\pi,\rho)$, torneo, elitismo y diversificación\\[3pt]
+$\downarrow$ estado de búsqueda \hfill operador seleccionado $\uparrow$\\[3pt]
+\textbf{Q-Learning: 27 estados, 7 acciones, política $\epsilon$-greedy}\\[3pt]
+$\downarrow$ candidato \hfill recompensa y nuevo estado $\uparrow$\\[3pt]
+\textbf{Evaluador determinista con capacidad de salas y especialistas}
+\end{minipage}}
+\captionof{figure}{Intercambio de información del diseño QL-MA. Esquema metodológico, no resultado experimental.}
+\label{fig:arquitectura}
+\end{center}
+
+\subsection{Componente 1: algoritmo memético}
+Cada individuo es $x=(\pi,\rho)$, donde $\pi=\langle j_1,\ldots,j_n\rangle$ fija prioridades y $\rho:J\times K\to R$ asigna salas elegibles. El personal y los tiempos son decisiones del decodificador. Para que esta representación sea reproducible, el decodificador debe fijar el orden de despacho, la inserción de intervalos y los desempates de especialistas y salas. Se exige reservar conjuntamente las ocupaciones necesarias para ambas etapas antes de aceptar una inserción, o disponer de un mecanismo equivalente que no libere prematuramente la sala de inducción. Si no construye un calendario válido, devuelve inviabilidad. Se implementó un decodificador serial: para cada cirugía en $\pi$, selecciona el especialista elegible de liberación más temprana, con desempate por identificador; reserva conjuntamente ambas etapas y sus limpiezas, y actualiza las liberaciones antes de atender la siguiente prioridad. El especialista se libera al terminar su procesamiento. El decodificador no inserta trabajos en huecos ya reservados, por lo que explora una subclase de calendarios factibles. Se verificó con casos de cálculo manual y un validador independiente de intervalos.
+
+La inicialización favorece la co-localización: cuando $R_{j,1}\cap R_{j,2}\ne\varnothing$, se intenta asignar ambas etapas a una misma sala con probabilidad $0{,}5$, equilibrando la carga acumulada. Se mantiene torneo de tamaño 3 y elitismo de dos individuos. Cuando $\gstag\geq10$, se reemplaza hasta el 30\,\% peor de la población no élite mediante soluciones guiadas y permutaciones aleatorias; el número se redondea hacia abajo. La reinicialización consume presupuesto y reinicia $\gstag$. Ninguna de estas decisiones garantiza por sí sola diversidad suficiente o mejor calidad final.
+
+\subsection{Componente 2: agente de Q-Learning}
+\paragraph{Estado.}
+El estado agregado es $(\phi,\theta,\omega)\in\{0,1,2\}^3$, indexado por $z=9\phi+3\theta+\omega$, con 27 posibilidades:
+\begin{itemize}
+\item Fase $\phi$: temprana si $e<0{,}33\Emax$, media si $0{,}33\Emax\leq e<0{,}66\Emax$ y tardía en otro caso; $e$ es el presupuesto consumido.
+\item Estancamiento $\theta$: $\gstag<3$, $3\leq\gstag<7$ o $\gstag\geq7$, según generaciones completas sin mejora global.
+\item Cuello de botella $\omega$: en el incumbente se calculan $P_W=\beta\sum_jW_j+\gamma_W\max_jW_j$ y $P_\Psi=\delta\Psi$. Si ambos son menores que $\tau$, $\omega=0$; en otro caso $\omega=1$ cuando $P_W\geq P_\Psi$ y $\omega=2$ en caso contrario. Se llama estado de penalización baja, no certificación de balance clínico.
+\end{itemize}
+Para un incumbente todavía inexistente por falta de soluciones factibles, se usa provisionalmente $\omega=0$ y se registra ese caso. Esta compresión no representa toda la población ni garantiza la propiedad de Markov. Q-Learning funciona aquí como mecanismo heurístico de selección; no se invocan garantías de convergencia del caso tabular estacionario.
+
+\paragraph{Acciones.}
+El portafolio conserva los siete operadores de la Entrega 2 (Tabla~\ref{tab:operadores}). La implementación fija desempates, herencia elegible y vecindarios antes de calibrar. 2-opt enumera inversiones; ruina/recreación extrae una cirugía crítica y evalúa todas sus reinserciones. El mejor vecino evaluado se conserva al truncar por presupuesto.
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}l p{3.6cm} Y@{}}\toprule
+Acción & Operador & Transformación y finalidad\\\midrule
+$a_0$ & Critical Swap & Intercambia dos posiciones críticas de $\pi$ para separar conflictos de especialistas.\\
+$a_1$ & Critical Path Shift & Reinserta una cirugía de término tardío; busca aliviar el makespan.\\
+$a_2$ & Room Load Leveling & Cambia una asignación hacia una sala elegible menos ocupada.\\
+$a_3$ & Same-Room Colocation & Co-localiza etapas cuando su intersección de elegibilidad no es vacía.\\
+$a_4$ & Elite OX1 Crossover & Cruce por orden con el incumbente, con herencia de asignaciones elegibles.\\
+$a_5$ & Local Search 2-Opt & Evalúa inversiones de subsegmentos y conserva la mejor mejora de $f$.\\
+$a_6$ & Ruin and Recreate & Extrae una cirugía crítica y evalúa su reinserción voraz.\\\bottomrule
+\end{tabularx}
+\captionof{table}{Portafolio $A=\{a_0,\ldots,a_6\}$. Los efectos son objetivos del diseño.}
+\label{tab:operadores}
+\end{center}
+
+\paragraph{Recompensa y aprendizaje.}
+Se preserva la recompensa original. Sea $f_p$ el valor del padre, $f_c$ el del candidato y $f^*_{\mathrm{prev}}$ el del incumbente antes de actualizarlo. Para candidatos factibles, $\Delta C=\max(0,\Cmax^p-\Cmax^c)$, expresado numéricamente en la unidad de tiempo fijada:
+\begin{equation}
+R_{t+1}=\begin{cases}
+-5,&\text{candidato inviable},\\
+10+2\Delta C,& f_c<f^*_{\mathrm{prev}},\\
+3+\Delta C,& f_c\geq f^*_{\mathrm{prev}}\ \text{y}\ f_c<f_p,\\
+0{,}5,& f_c\geq f^*_{\mathrm{prev}}\ \text{y}\ f_c=f_p,\\
+-1,&\text{en otro caso factible}.
+\end{cases}
+\label{eq:reward}
+\end{equation}
+Las condiciones se aplican en ese orden. Las mejoras de fitness se comparan estrictamente; el validador temporal usa una tolerancia de $10^{-8}$ min. Un candidato inviable tiene valor extendido $+\infty$, se descarta y no reemplaza un padre factible. Son causas de rechazo una permutación inválida, inelegibilidad o un calendario no válido.
+
+La tabla se actualiza mediante
+\begin{equation}
+Q(z_t,a_t)\leftarrow Q(z_t,a_t)+\alpha_{\mathrm{RL}}
+\left[R_{t+1}+\gamma_{\mathrm{RL}}\max_{a\in A}Q(z_{t+1},a)-Q(z_t,a_t)\right],
+\label{eq:q}
+\end{equation}
+con valores iniciales $\alpha_{\mathrm{RL}}=0{,}15$ y $\gamma_{\mathrm{RL}}=0{,}85$. El término futuro es cero al agotar el presupuesto. La selección es $\epsilon$-greedy, con desempate aleatorio reproducible entre acciones maximizadoras y
+\begin{equation}
+\epsilon(e)=\max\{\epsilon_{\min},\epsilon_{\mathrm{start}}(1-e/\Emax)\},\qquad
+\epsilon_{\mathrm{start}}=0{,}35,\quad\epsilon_{\min}=0{,}05.
+\end{equation}
+La recompensa distingue mejoras de $f$, pero el bono usa makespan y depende de la escala temporal. La escala se mantiene fija en minutos; no se interpreta como optimización exclusiva de $f$. Los operadores multivecino consumen distintas evaluaciones por acción: el descuento se aplica por decisión, y su costo se registra para no confundir frecuencia con eficiencia.
+
+\subsection{Orquestación y criterio de parada}
+Todo candidato enviado al evaluador consume una unidad de $e$, incluidos los rechazos por validación previa. El registro diferencia intentos y llamadas efectivas al simulador. Esta convención de contabilización debe ser idéntica en todos los métodos. Los valores almacenados no se vuelven a evaluar. Los operadores multivecino comprueban el presupuesto antes de cada candidato y actualizan el incumbente tras cada evaluación, incluso la última. Se exige $\Emax\geq N_{\mathrm{pop}}\geq3$.
+
+El Algoritmo~\ref{alg:qlma} precisa el orden entre reemplazo, diversificación y actualización del estado. El estado siguiente siempre refleja el $e$ actualizado: un rechazo no congela la fase de búsqueda. Al cerrar una generación se actualiza $\gstag$ y se diversifica la población recién construida. Esto evita reinicializar una población que luego sería sobrescrita.
+
+\begin{center}
+\begin{minipage}{0.96\linewidth}\small
+\hrule\smallskip
+\refstepcounter{algorithm}\textbf{Algoritmo \thealgorithm: QL-MA con selección adaptativa.}\par
+\label{alg:qlma}
+\textbf{Entrada:} instancia, semilla, $\Emax$, $N_{\mathrm{pop}}$ y parámetros.\\
+\textbf{Salida:} mejor calendario factible $x^*$ o indicador de que no se halló ninguno.
+\begin{enumerate}[label=\arabic*.,leftmargin=1.8em]
+\item Inicializar generadores, $Q=0$, $\gstag=0$, $e=0$ e incumbente vacío con $f^*=+\infty$.
+\item Construir y evaluar $N_{\mathrm{pop}}$ individuos de $P$; actualizar $e$ y el incumbente tras cada evaluación.
+\item Mientras $e<\Emax$:
+\begin{enumerate}[label=\alph*.,leftmargin=1.5em]
+\item Crear $P_{\mathrm{new}}$ con los dos mejores de $P$; marcar mejora global de generación como falsa.
+\item Mientras $|P_{\mathrm{new}}|<N_{\mathrm{pop}}$ y quede presupuesto:
+\begin{enumerate}[label=\roman*.,leftmargin=1.5em]
+\item Obtener $z_t$, seleccionar padre por torneo y acción $a_t$ por $\epsilon$-greedy.
+\item Aplicar y evaluar $a_t$ con el presupuesto restante. Conservar el mejor candidato evaluado y su valor; guardar el incumbente anterior para calcular la recompensa. Registrar todos los intentos y actualizar $x^*$ con cada mejora factible, sin reevaluación.
+\item Insertar el mejor entre padre y candidato en $P_{\mathrm{new}}$; ante inviabilidad del candidato conservar el padre. Acumular si hubo mejora global durante la generación.
+\item Si se agotó el presupuesto, actualizar Q con continuación cero y devolver $x^*$ o el indicador de fallo.
+\item Si se completó la generación, asignar $P\leftarrow P_{\mathrm{new}}$ y actualizar $\gstag$. Si $\gstag\geq10$, diversificar $P$ dentro del presupuesto, actualizar el incumbente tras cada evaluación y reiniciar $\gstag$.
+\item Recalcular $z_{t+1}$ con $e$, $\gstag$ e incumbente actuales; actualizar Q mediante \eqref{eq:q}. Si una diversificación agotó el presupuesto, usar continuación cero y devolver el incumbente.
+\end{enumerate}
+\end{enumerate}
+\item Devolver el incumbente. Si nunca fue factible, reportar el fallo y no asignarle una métrica finita.
+\end{enumerate}
+\smallskip\hrule
+\end{minipage}
+\end{center}
+La transición que cierra una generación incluye su diversificación como parte del entorno del selector. No se atribuye una actualización Q separada a cada individuo reinicializado; esa convención se mantiene igual en las réplicas. Si el presupuesto termina con una generación incompleta, se devuelve el mejor calendario evaluado sin necesitar completar la población.
+
+\section{Configuración experimental (Experimental Setup)}
+\subsection{Instancias y partición}
+Se utilizaron los 37 YAML sintéticos del repositorio \url{https://github.com/Saicooh/OII464_Hospitales}, sin recrearlos: cuatro HOSP-DIDACT, 12 HOSP-STD y 21 HOSP-12R. Las cuatro didácticas se reservaron para validación; HOSP-STD-20-01 y HOSP-12R-40-01 para calibración; HOSP-STD-20-02 y HOSP-12R-40-02 para piloto. Quedaron 29 instancias de prueba: 10 estándar y 19 con 12 salas, con tamaños entre 15 y 60 cirugías. Identificadores, dimensiones, elegibilidad y hashes se conservan en el manifiesto. No se consultó desempeño de prueba al depurar, elegir presupuesto o calibrar. Se trata de datos sintéticos, sin pacientes reales.
+
+\subsection{Métodos y comparabilidad}
+Se evaluaron GA, dPSO, SBOA y dMShOA, además de cuatro variantes meméticas. Todos utilizaron el mismo evaluador, pesos, instancias, reglas de factibilidad y contador de candidatos. Se corrigió GA para mantener una única permutación y un OX1 válido: la representación duplicada original podía corromperse al mutar y cruzarse. dMShOA se dirigió al objetivo compuesto común, en lugar de su makespan tipado original. Por tanto, se comparan las implementaciones armonizadas de este estudio, no los programas originales sin cambios ni todas las variantes de cada familia.
+
+\subsection{Calibración independiente}
+Se ejecutó irace 4.5.1 \cite{irace}, con presupuesto nominal de 500 llamadas de \texttt{targetRunner} por método o variante. El consumo real fue de 500 para GA, dPSO, dMShOA, B, C y D, y 499 para SBOA y A: 3998 llamadas en total, no 4000 procesos de irace. Cada llamada recibió $200n$ evaluaciones. El costo fue $f$ dividido por el valor de una referencia constructiva fija de esa misma instancia de calibración, independiente del conjunto de prueba.
+
+Todos calibraron $N\in\{20,30,50,80\}$. GA ajustó cruce en $[0,60;0,95]$ y mutación en $[0,05;0,50]$; dPSO, $w\in[0,3;0,9]$ y $c_1,c_2\in[0,5;2,5]$; dMShOA, $k\in[0,1;0,8]$. SBOA calibró población y conservó sus límites geométricos. La variante A ajustó siete pesos positivos en $[0,05;1]$, normalizados al seleccionar; B ajustó población. C y D usaron los dominios de la Tabla~\ref{tab:param}. Se mantuvieron torneo 3, dos élites, co-localización inicial con probabilidad 0,5, $\epsilon_{\min}=0,05$ y diversificación del 30\,\% no élite en 10 generaciones, salvo en D.
+\begin{center}\small
+\begin{tabular}{@{}llll@{}}\toprule
+Parámetro & Inicial de Entrega 2 & Dominio & Seleccionado en C\\\midrule
+$N_{\mathrm{pop}}$ & 50 & $\{20,30,50,80\}$ & 30\\
+$\alpha_{\mathrm{RL}}$ & 0,15 & $[0,05;0,50]$ & 0,2867\\
+$\gamma_{\mathrm{RL}}$ & 0,85 & $[0,50;0,95]$ & 0,7384\\
+$\epsilon_{\mathrm{start}}$ & 0,35 & $[0,10;0,50]$ & 0,1891\\
+$\tau$ & 50 & $[20;100]$ & 26,5724\\\bottomrule
+\end{tabular}
+\captionof{table}{Dominios conservados y configuración seleccionada de QL-MA.}
+\label{tab:param}
+\end{center}
+Las poblaciones finales fueron 20, 20, 50 y 20 para GA, dPSO, SBOA y dMShOA; A utilizó 50, B 30 y D 50. Los archivos de configuración incluyen todos los valores exactos, dominios, costos y semillas; los valores iniciales no se presentan como calibrados.
+
+\subsection{Presupuesto y criterio de parada}
+La Entrega 2 proponía $\Emax=2000n$. Se aplicó su revisión única en un piloto separado: el primer piloto comprendió 48 corridas de 1000 evaluaciones y se añadieron 32 corridas en los dos casos reservados comparando $100n$ y $200n$, con una semilla adicional. Por viabilidad temporal se fijó $\Emax=200n$ antes de calibrar y probar, igual para todos los métodos: 3000 evaluaciones para $n=15$ y 12000 para $n=60$. El piloto no acreditó convergencia; el presupuesto reducido es una limitación explícita.
+
+Cada intento enviado al evaluador, incluido un candidato inviable, consume presupuesto. Inicialización, vecindarios y diversificación se incluyen. Consultas a detalles almacenados no se reevalúan. Un controlador conserva toda mejora, incluida la última, y verifica que cada corrida agote exactamente su límite. Los horizontes internos de iteraciones de los baselines se derivan de población y presupuesto, mientras la parada efectiva se fija por evaluaciones.
+
+\subsection{Réplicas y semillas}
+Cada combinación método--instancia de prueba se ejecutó con 30 semillas, de 30000 a 30029, como índice de bloqueo. No se presupone que los métodos consuman los mismos números aleatorios ni compartan población inicial. irace utilizó semillas target en el intervalo $[10^8,2\cdot10^8)$, derivadas de su semilla interna; los pilotos utilizaron 20000 y 20002. Estas corrientes no se mezclan con las de prueba. Se completaron $29\times30\times8=6960$ corridas finales, sin fallos estructurales.
+
+\subsection{Métricas y agregación}
+La métrica principal es $f$. Por instancia y método se calcularon media, mediana y desviación estándar, además de $\Cmax$, $\sum_jW_j$, $\max_jW_j$, $\Psi$, CPU y tiempo transcurrido. La factibilidad de las corridas se distingue del rechazo de candidatos durante búsqueda. Para referencia positiva se utilizó
+\begin{equation}
+\mathrm{RPD}_{i,a,r}=100\frac{f_{i,a,r}-f_i^{\mathrm{best}}}{f_i^{\mathrm{best}}},\qquad
+f_i^{\mathrm{best}}=\min_{a,r}f_{i,a,r}.
+\end{equation}
+La referencia incluye los ocho métodos y es empírica, no un óptimo certificado. Se promedian primero las 30 réplicas de cada instancia y después las 29 instancias con igual peso. La DE del RPD entre medias por instancia describe heterogeneidad del banco, no estabilidad entre semillas. Las curvas guardan el mejor valor frente a evaluaciones; los gráficos de convergencia se seleccionaron por identificador, no por calidad observada.
+
+\subsection{Ablación}
+A es el memético con probabilidades fijas calibradas, B selecciona uniformemente, C es QL-MA completo y D elimina la diversificación. A y B conservan los demás componentes. Cada variante se calibró independientemente; por ello, B--C y C--D comparan sistemas calibrados y no aíslan causalmente un único componente con todos los parámetros restantes constantes.
+
+\subsection{Análisis estadístico}
+Se aplicaron Wilcoxon pareados por instancia y Friedman/Iman--Davenport sobre las medias de los cinco métodos principales, con instancias como bloques \cite{derrac,iman}. Holm controla las 116 comparaciones locales con baselines y, por separado, las 87 de ablación \cite{garcia}. Se guardan Hodges--Lehmann e intervalos percentiles de 2000 remuestras pareadas, con semilla fija; estos intervalos bootstrap no se denominan exactos de rangos. $A_{12}$ \cite{vargha} quedó como medida descriptiva opcional y no se calculó en esta ejecución.
+
+Al redactar se observaron diferencias asimétricas en algunas instancias. Por ello se añadió, de forma \emph{post hoc} y explícitamente exploratoria, una sensibilidad con prueba binomial de signos: por instancia sobre sus 30 pares y globalmente sobre el signo de la diferencia de medias en 29 instancias. Se ajustan por Holm las cuatro comparaciones globales con baselines y las tres de ablación como familias distintas. La sección de resultados prioriza esta comprobación, que no requiere simetría de las magnitudes. No se presenta esta ampliación como un protocolo prerregistrado ni como sustituto de evaluar independencia y alcance del banco.
+
+\subsection{Entorno y trazabilidad}
+Se utilizó un AMD Ryzen 7 5700X, 16 procesadores lógicos y 31,92 GiB de RAM, con Windows 10, Python 3.13.15, R 4.5.2 e irace 4.5.1. NumPy 2.4.1 y SciPy 1.17.0 figuran en las dependencias fijadas. La versión binaria de irace declara compilación bajo R 4.5.3; se comprobó su ejecución bajo R 4.5.2 y se conservaron sus avisos. El piloto se ejecutó secuencialmente; la producción terminó con cuatro procesos aislados y un hilo matemático por proceso. Los tiempos de pared se interpretan bajo concurrencia; la CPU por corrida tampoco equivale a un benchmark con aislamiento físico.
+
+Se preservaron las calibraciones terminadas al paralelizar la coordinación. Una prueba de equivalencia con ocho métodos verificó igualdad de objetivo, solución y componentes entre secuencial y paralelo. El hash de fuentes experimentales se mantuvo en \texttt{ab0a6267bfb5\ldots}. El paquete reproducible incluye el hash completo, código modificado, YAML, particiones, versiones, configuraciones de irace, semillas, 3998 registros de calibración y 6960 registros finales con calendarios y curvas. Se verificaron presupuestos agotados, versión común y cero errores del validador en todas las corridas finales.
+
+% Secciones nuevas: tres páginas de resultados y una de conclusión.
+\clearpage
+\typeout{RESULTS_START_PAGE=\thepage}
+\section{Results and Discussion (Resultados y discusión)}
+\label{sec:resultados}
+\subsection{Calidad de solución y factibilidad}
+Las 6960 corridas finales agotaron sus presupuestos y produjeron calendarios aceptados por el validador independiente: 870 por método, en 29 instancias. La Tabla~\ref{tab:resultados} resume el RPD con igual peso por instancia. QL-MA obtiene 22,59\,\%, frente a 55,27\,\% de GA, 99,25\,\% de dPSO, 106,95\,\% de SBOA y 121,25\,\% de dMShOA. La comparación usa el evaluador armonizado y el presupuesto revisado $200n$; no certifica optimalidad ni representa todas las implementaciones de estos métodos.
+
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}Yrrrr@{}}\toprule
+Método & RPD medio & DE entre & $\Cmax$ medio & CPU media\\
+ & (\%) & instancias & (min) & (s)\\\midrule
+GA & 55,27 & 10,37 & 341,00 & 1,83 \\
+dPSO & 99,25 & 30,75 & 389,33 & 2,53 \\
+SBOA & 106,95 & 24,73 & 398,34 & 1,93 \\
+dMShOA & 121,25 & 28,11 & 402,69 & 2,27 \\
+A: probabilidades fijas & 14,72 & 4,56 & 264,85 & 1,57 \\
+B: uniforme & 24,90 & 9,01 & 280,69 & 1,54 \\
+C: QL-MA & 22,59 & 4,61 & 277,63 & 1,55 \\
+D: sin diversificación & 23,22 & 4,46 & 277,69 & 1,56 \\
+\bottomrule
+\end{tabularx}
+\captionof{table}{Resultados finales. RPD: menor es mejor. DE: dispersión de las 29 medias por instancia. Makespan y CPU son promedios descriptivos de un banco heterogéneo; no sustituyen el desglose por instancia del suplemento. CPU medida bajo cuatro procesos concurrentes.}
+\label{tab:resultados}
+\end{center}
+
+La mejor media global corresponde a A, el memético con probabilidades fijas calibradas: 14,72\,\%. QL-MA presenta un RPD 7,86 puntos porcentuales mayor, es decir, obtiene peor calidad. Este hallazgo impide atribuir las ventajas frente a los baselines exclusivamente al aprendizaje: la estructura memética y el portafolio especializado explican una parte relevante de la diferencia observada, aunque la ablación recalibrada no identifica sus efectos causales por separado.
+
+\subsection{Evidencia global frente a los baselines}
+La media de $f$ de QL-MA fue menor que la de cada baseline en las 29 instancias. Friedman sobre los cinco métodos principales produjo $\chi_F^2=111,03$, con cuatro grados de libertad y $p=4,38\cdot10^{-23}$; Iman--Davenport produjo $F=626,11$. El contraste indica diferencias entre métodos, sin identificar por sí solo el mejor.
+
+La sensibilidad global de signos sobre las diferencias de medias confirma la dirección frente a cada baseline: 29 victorias de QL-MA, cero empates y cero derrotas, con $p$ ajustado por Holm de $1,49\cdot10^{-8}$ en cada comparación. La sensibilidad local también distingue a QL-MA de cada baseline en las 29 instancias tras el ajuste de su familia de 116 contrastes. Son resultados condicionados al banco y al modelo; no se extrapolan a hospitales reales. Los $p$ ajustados acompañan la magnitud del RPD y no prueban relevancia clínica.
+
+\newpage
+\subsection{Aporte del aprendizaje y de la diversificación}
+La Tabla~\ref{tab:ablacion} compara C con cada variante. La columna $\Delta$ es RPD(C) menos RPD de la variante, en puntos porcentuales; un valor positivo desfavorece a C. Las victorias se cuentan por media de $f$ en cada instancia y el contraste global utiliza sus signos, con Holm sobre las tres comparaciones de ablación.
+\begin{center}\small
+\begin{tabularx}{\linewidth}{@{}Yrrr@{}}\toprule
+Comparación de C & $\Delta$ RPD & V/E/D de C & $p$ global ajustado\\\midrule
+Frente a A: fijas & $+7,86$ & 0/0/29 & $1,12\cdot10^{-8}$\\
+Frente a B: uniforme & $-2,31$ & 18/0/11 & 0,530\\
+Frente a D: sin diversificar & $-0,63$ & 17/0/12 & 0,530\\\bottomrule
+\end{tabularx}
+\captionof{table}{Ablación de variantes calibradas independientemente. V/E/D: victorias, empates y derrotas. La sensibilidad de signos es un análisis complementario post hoc.}
+\label{tab:ablacion}
+\end{center}
+A supera a C en todas las medias por instancia y en 12 contrastes locales de signos ajustados. El beneficio medio de C frente a B es heterogéneo: 18 victorias y 11 derrotas, con siete diferencias locales ajustadas y sin evidencia global concluyente. C y D muestran medias próximas, ninguna diferencia local ajustada en signos y 17 victorias frente a 12 derrotas. No se afirma equivalencia ni ausencia absoluta de efecto: el diseño y la potencia disponibles no establecen una ventaja global de esos componentes.
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=0.91\linewidth,height=4.7cm,ybar,bar width=11pt,ymin=0,ymax=33,
+ ylabel={RPD medio (\%)},symbolic x coords={A,B,C,D},xtick=data,
+ legend style={at={(0.5,1.02)},anchor=south,legend columns=2,draw=none,font=\small},
+ tick label style={font=\small},label style={font=\small},ymajorgrids=true,grid style={gray!20},
+ enlarge x limits=0.2]
+\addplot[fill=blue!55,draw=blue!65] coordinates {(A,12.5511)(B,19.7309)(C,20.3378)(D,20.8203)};
+\addplot[fill=teal!65,draw=teal!80] coordinates {(A,15.8682)(B,27.6225)(C,23.7721)(D,24.4760)};
+\legend{HOSP-STD (10),HOSP-12R (19)}
+\end{axis}
+\end{tikzpicture}
+\captionof{figure}{RPD por familia y variante. Agregación descriptiva con igual peso por instancia; no es un contraste confirmatorio de subgrupos.}
+\label{fig:familias}
+\end{center}
+El contraste por familia ayuda a interpretar esa heterogeneidad. En estándar, C obtiene 20,34\,\% frente a 19,73\,\% de B; en HOSP-12R, C alcanza 23,77\,\% frente a 27,62\,\% de B. A mantiene el menor RPD en ambas familias. La diferencia de composición del banco hace insuficiente informar solo una media global.
+
+\newpage
+\subsection{Espera, costo computacional y alcance del modelo}
+La espera máxima media por corrida fue 4,34 min para C, frente a 9,67 de GA, 30,67 de dPSO, 30,41 de SBOA y 39,69 de dMShOA. A alcanzó 2,59 min, B 7,63 y D 4,92. Estas cifras promedian instancias de distintos tamaños: sirven para describir el conjunto, mientras el suplemento permite evaluar cada caso. C no domina a A en makespan ni en la espera resumida, de forma coherente con el orden de fitness.
+
+La CPU media de C fue 1,55 s por corrida, próxima a A (1,57 s), B (1,54 s) y D (1,56 s). La ejecución paralela acelera el lote completo, pero sus tiempos de pared no se comparan como si se hubieran medido con aislamiento físico. La similitud de CPU tampoco acredita que el control adaptativo tenga costo nulo: los operadores consumen distintas cantidades de evaluaciones por selección y las variantes calibradas utilizan poblaciones distintas.
+
+La mediana del coeficiente de variación de $f$ entre las 30 semillas de cada instancia fue 6,74\,\% para C, frente a 6,00\,\% para A, 6,09\,\% para B y 7,27\,\% para D. Es una descripción de dispersión interna, no una garantía de robustez fuera del banco.
+
+Todos los calendarios cumplen precedencia, elegibilidad, exclusión de recursos y reserva de salas del evaluador. Sin embargo, se observaron 17 eventos que exceden el metadato de espera \texttt{max\_wait} en las 870 corridas de C y 10 en las de A. Este metadato no se impuso como restricción dura. Por tanto, ``cero fallos'' significa factibilidad del modelo penalizado, no cumplimiento de todos los límites clínicos incluidos como información auxiliar. Antes de una aplicación hospitalaria se deben acordar y aplicar las restricciones clínicas duras pertinentes.
+
+\subsection{Interpretación y amenazas de validez}
+El resultado respalda la utilidad del diseño memético especializado frente a los cuatro programas base armonizados, pero no demuestra que Q-Learning sea su componente determinante. La mejor alternativa global es A. Una explicación plausible es que sus probabilidades calibradas asignen mejor el presupuesto finito entre operadores; esta explicación no se probó causalmente. El estado de 27 configuraciones omite la población completa, la recompensa combina mejoras de $f$ con un bono de makespan no normalizado y el costo por acción es desigual. Estas decisiones limitan la atribución de crédito y no satisfacen automáticamente los supuestos de un MDP estacionario.
+
+La calibración en solo dos instancias y el piloto de presupuesto con una semilla adicional restringen la generalización. No se acreditó convergencia con $200n$; un presupuesto mayor podría alterar el orden. Recalibrar cada ablación cambia otros parámetros, por lo que sus diferencias corresponden a sistemas completos. El decodificador serial sin inserción en huecos también restringe el espacio accesible, y los límites \texttt{max\_wait} auditados pero no impuestos afectan la validez de constructo.
+
+Finalmente, duraciones deterministas, datos sintéticos y ausencia de urgencias, recuperación y turnos excluyen inferencias clínicas. La sensibilidad de signos se añadió al examinar los resultados y se identifica como exploratoria, aunque la separación entre calibración, piloto y prueba se mantuvo. La contribución acreditada es una implementación reproducible y una comparación transparente que, además de mejoras frente a baselines, muestra un límite del control adaptativo bajo las condiciones estudiadas.
+\label{sec:resultados-fin}
+\typeout{RESULTS_END_PAGE=\thepage}
+
+\clearpage
+\typeout{CONCLUSION_START_PAGE=\thepage}
+\section{Conclusion (Conclusión)}
+\label{sec:conclusion}
+Se implementó y evaluó QL-MA para programación quirúrgica sintética con bloqueo y recursos duales. El diseño conserva la arquitectura memética de la Entrega 2 e incorpora siete operadores, 27 estados y Q-Learning en línea. La armonización del evaluador hizo explícitas la reserva continua de salas, la limpieza final, la capacidad del personal y la contabilización de todas las evaluaciones.
+
+La evaluación final comprende 6960 corridas sobre 29 instancias, con 30 semillas y presupuesto común $200n$, precedida por 3998 llamadas reales de calibración. QL-MA obtuvo un RPD medio de 22,59\,\% y menor media de fitness que los cuatro baselines en todas las instancias. No obstante, el memético de probabilidades fijas calibradas alcanzó 14,72\,\% y superó a QL-MA en las 29 medias por instancia. La selección aprendida no mostró una ventaja global concluyente frente a la uniforme; tampoco la diversificación frente a su ablación, bajo la sensibilidad de signos aplicada.
+
+La conclusión es, por tanto, acotada: el portafolio memético especializado es competitivo en el banco estudiado, mientras que añadir control adaptativo no garantiza mejor uso de un presupuesto finito. Los resultados no certifican optimalidad, equivalencia entre variantes ni mejoras de seguridad clínica. Los eventos que exceden el metadato de espera y la simplificación determinista impiden recomendar adopción operativa directa.
+
+Como continuación, se propone ampliar la calibración, estudiar presupuestos mayores y sensibilidad de pesos, y comparar variantes con parámetros comunes para aislar componentes. También conviene normalizar recompensa y costo por evaluación e introducir los límites clínicos duros antes de extender el estudio a incertidumbre, urgencias y recursos posoperatorios. El código, configuraciones, semillas y registros permiten repetir el análisis y contrastar esas hipótesis sin sustituir observaciones por expectativas.
+\label{sec:conclusion-fin}
+\typeout{CONCLUSION_END_PAGE=\thepage}
+
+\clearpage
+\begin{thebibliography}{99}\small\raggedright
+\bibitem{cardoen} B. Cardoen, E. Demeulemeester y J. Beliën, ``Operating room planning and scheduling: A literature review,'' \emph{European Journal of Operational Research}, 201(3), 921--932, 2010. \href{https://doi.org/10.1016/j.ejor.2009.04.011}{doi:10.1016/j.ejor.2009.04.011}.
+\bibitem{aringhieri} R. Aringhieri, P. Landa, P. Soriano, E. Tànfani y A. Testi, ``A two level metaheuristic for the operating room scheduling and assignment problem,'' \emph{Computers \& Operations Research}, 54, 21--34, 2015. \href{https://doi.org/10.1016/j.cor.2014.08.014}{doi:10.1016/j.cor.2014.08.014}.
+\bibitem{addis} B. Addis, G. Carello, A. Grosso y E. Tànfani, ``Operating room scheduling and rescheduling: a rolling horizon approach,'' \emph{Flexible Services and Manufacturing Journal}, 28, 206--232, 2016. \href{https://doi.org/10.1007/s10696-015-9213-7}{doi:10.1007/s10696-015-9213-7}.
+\bibitem{karimi} M. Karimi-Mamaghan, M. Mohammadi, P. Meyer, A. M. Karimi-Mamaghan y E.-G. Talbi, ``Machine learning at the service of meta-heuristics for solving combinatorial optimization problems: A state-of-the-art,'' \emph{European Journal of Operational Research}, 296(2), 393--422, 2022. \href{https://doi.org/10.1016/j.ejor.2021.04.032}{doi:10.1016/j.ejor.2021.04.032}.
+\bibitem{zhao} F. Zhao, S. Di y L. Wang, ``A hyperheuristic with Q-learning for the multiobjective energy-efficient distributed blocking flow shop scheduling problem,'' \emph{IEEE Transactions on Cybernetics}, 53(5), 3337--3350, 2023. \href{https://doi.org/10.1109/TCYB.2022.3192112}{doi:10.1109/TCYB.2022.3192112}.
+\bibitem{jin} Y. Jin, ``Surrogate-assisted evolutionary computation: Recent advances and future challenges,'' \emph{Swarm and Evolutionary Computation}, 1(2), 61--70, 2011.
+\bibitem{derrac} J. Derrac, S. García, D. Molina y F. Herrera, ``A practical tutorial on the use of nonparametric statistical tests as a methodology for comparing evolutionary and swarm intelligence algorithms,'' \emph{Swarm and Evolutionary Computation}, 1(1), 3--18, 2011.
+\bibitem{garcia} S. García y F. Herrera, ``An extension on `Statistical comparisons of classifiers over multiple data sets' for all pairwise comparisons,'' \emph{Journal of Machine Learning Research}, 9, 2677--2694, 2008.
+\bibitem{iman} R. L. Iman y J. M. Davenport, ``Approximations of the critical region of the Friedman statistic,'' \emph{Communications in Statistics--Theory and Methods}, 9(6), 571--595, 1980.
+\bibitem{vargha} A. Vargha y H. D. Delaney, ``A critique and improvement of the CL common language effect size statistics of McGraw and Wong,'' \emph{Journal of Educational and Behavioral Statistics}, 25(2), 101--132, 2000.
+\bibitem{irace} M. López-Ibáñez, J. Dubois-Lacoste, L. Pérez Cáceres, M. Birattari y T. Stützle, ``The irace package: Iterated racing for automatic algorithm configuration,'' \emph{Operations Research Perspectives}, 3, 43--58, 2016. \href{https://doi.org/10.1016/j.orp.2016.09.002}{doi:10.1016/j.orp.2016.09.002}.
+\end{thebibliography}
+\end{document}

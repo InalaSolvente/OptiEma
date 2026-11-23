@@ -1,0 +1,49 @@
+1. QL-MA para programación quirúrgica
+Tiempo objetivo: 0:30
+Presentamos un diseño híbrido para cirugías electivas con bloqueo. La pregunta es si seleccionar operadores con Q-Learning mejora el uso de un presupuesto finito. Anticipamos el hallazgo central: QL-MA mejora frente a los baselines, pero el memético con probabilidades fijas calibradas obtiene mejor calidad global. Ese resultado permite separar la promesa del diseño de la evidencia observada.
+
+2. Bloqueo y recursos duales
+Tiempo objetivo: 1:10
+La precedencia por sí sola no representa bloqueo. Cuando la segunda etapa no puede empezar, la primera sala permanece ocupada aunque haya terminado la inducción. Esto vincula la secuencia con las asignaciones y con la disponibilidad del personal. El modelo estudia una jornada determinista y no incluye urgencias, recuperación ni camas. Los datos son sintéticos y no corresponden a pacientes reales.
+
+3. Función objetivo y calendario factible
+Tiempo objetivo: 1:20
+Todos los tiempos se expresan en minutos. El horizonte de 480 minutos normaliza ocupación y no impone una fecha límite dura. Si las etapas utilizan la misma sala, la ocupación es continua y no se cuenta dos veces. Si utilizan salas distintas, la primera queda retenida hasta el inicio de cirugía y su limpieza. El makespan incluye la última limpieza de cualquier sala. Los valores max_wait del YAML se auditan como metadatos y no son restricciones duras de este modelo penalizado.
+
+4. Algoritmo memético con Q-Learning
+Tiempo objetivo: 1:30
+La solución codifica una permutación y asignaciones de salas. El decodificador elige especialistas elegibles con liberación más temprana y desempates deterministas. El portafolio contiene intercambio crítico, reinserción tardía, balance de salas, co-localización, OX1 con la élite, 2-opt y ruina/recreación de una cirugía crítica. Todos los vecinos consumen el presupuesto común. La tabla Q se reinicia en cada corrida y su continuación es cero al agotar evaluaciones. No se invocan garantías de convergencia de un MDP estacionario.
+
+5. Diseño experimental ejecutado
+Tiempo objetivo: 1:20
+Se separaron identificadores de calibración, piloto y prueba. El conjunto final incluye 10 casos estándar y 19 con 12 salas. El plan inicial proponía 2000n evaluaciones y permitía revisar ese valor en piloto. Por viabilidad temporal se fijó 200n antes de calibrar y probar. No se acreditó convergencia, por lo que el presupuesto es una limitación explícita. Se calibraron independientemente los cuatro baselines y las cuatro variantes. Los 3998 targetRunner reales respetan el presupuesto nominal de 4000. Todas las corridas finales agotaron su presupuesto.
+
+6. La variante fija obtiene el menor RPD
+Tiempo objetivo: 1:20
+RPD mide diferencia porcentual respecto del mejor valor empírico observado en cada instancia entre los ocho métodos. No es una brecha a un óptimo certificado. Se promedian primero 30 semillas y después 29 instancias con igual peso. QL-MA obtiene 22,59 por ciento y mejora frente a los cuatro baselines. Sin embargo, la variante fija obtiene 14,72 por ciento. La diferencia es de 7,86 puntos porcentuales y desfavorece a QL-MA. Este es el hallazgo que debe guiar la conclusión.
+
+7. Comparación con los cuatro baselines
+Tiempo objetivo: 1:10
+La media por instancia es menor para QL-MA frente a GA, dPSO, SBOA y dMShOA en los 29 bloques. Friedman compara cinco métodos y detecta diferencias globales, sin identificar por sí mismo el mejor. Durante la redacción se añadieron pruebas de signos porque algunas diferencias no parecían simétricas. Se declara expresamente que es un análisis exploratorio post hoc. La sensibilidad local conserva diferencias frente a cada baseline en las 29 instancias tras Holm. Las conclusiones se restringen a las implementaciones armonizadas y a este banco.
+
+8. El aporte adaptativo es heterogéneo
+Tiempo objetivo: 1:40
+A es el memético con probabilidades fijas calibradas, B selecciona uniformemente, C es QL-MA y D elimina diversificación. A supera a C en las medias de todas las instancias. C obtiene menor media que B en 18 casos y peor en 11, con p global ajustado 0,530. Frente a D gana 17 y pierde 12, también con p 0,530. No se afirma equivalencia. La comparación por familia es descriptiva: C es ligeramente peor que B en estándar y mejor en HOSP-12R. Cada variante fue recalibrada, lo cual limita la atribución causal a un único componente.
+
+9. Factibilidad y metadatos de espera
+Tiempo objetivo: 1:10
+Cero fallos significa que los calendarios respetan las restricciones efectivamente implementadas. No significa que se satisfagan todos los criterios de una operación hospitalaria. Los metadatos max_wait permitieron auditar excedencias, pero no formaron una restricción dura. Es una diferencia esencial entre calidad operativa dentro del modelo y validación clínica. QL-MA presenta espera máxima media de 4,34 minutos, mientras A alcanza 2,59. Los promedios del banco no sustituyen revisar cada caso ni los eventos extremos.
+
+10. Costo de CPU entre variantes meméticas
+Tiempo objetivo: 1:00
+Las medias de CPU por corrida son próximas entre las cuatro variantes. La ejecución final usa cuatro procesos aislados y un hilo matemático por proceso. Por ello sus tiempos de pared incluyen concurrencia y no se comparan con el piloto secuencial como si existiera aislamiento físico. Las diferencias pequeñas de CPU no prueban ausencia de costo del aprendizaje. Los operadores tienen costos distintos en evaluaciones y las poblaciones seleccionadas por irace también cambian.
+
+11. Límites del experimento
+Tiempo objetivo: 1:20
+La reproducibilidad permite repetir el experimento, pero no elimina estas amenazas. La calibración puede ajustarse a solo dos casos. El piloto con una semilla adicional no acredita estabilidad. El decodificador reserva calendarios serialmente y no explora todas las inserciones posibles. El estado omite detalles de la población y el bono de recompensa depende de makespan sin normalización por costo. Además, una ablación recalibrada cambia parámetros restantes. Estas condiciones explican por qué no formulamos una conclusión universal sobre Q-Learning ni extrapolamos a pacientes.
+
+12. Conclusión
+Tiempo objetivo: 0:50
+El resultado central es acotado y útil: añadir aprendizaje no garantiza un mejor uso de un presupuesto finito. QL-MA mejora a los cuatro baselines, pero A obtiene la mejor calidad global. No se observa una ventaja global concluyente frente al selector uniforme ni frente a la ablación de diversificación bajo el análisis de signos. La continuación debe comparar parámetros comunes, ampliar calibración y presupuestos y definir restricciones clínicas antes de cualquier adopción real. El paquete conserva código, semillas, configuraciones y registros para contrastar esas hipótesis.
+
+Duración objetivo total: 14 min 20 s.

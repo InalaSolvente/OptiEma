@@ -1,0 +1,899 @@
+{
+  "instance_id": "HOSP-DIDACT-05-01",
+  "instance_digest": "ef386c09c3f5458cab006e8ecf0e4f5f7d8444696b9005438ec61d705b59c8e2",
+  "method": "qlma",
+  "seed": 20000,
+  "parameters": {},
+  "budget": 1000,
+  "evaluations": 1000,
+  "rejected": 0,
+  "status": "completed",
+  "error": null,
+  "validation_errors": [],
+  "objective": 74.99854557016607,
+  "wall_seconds": 0.04714960002456792,
+  "cpu_seconds": 0.046875,
+  "result": {
+    "f": 74.99854557016607,
+    "makespan": 73.5,
+    "wait_sum": 0.0,
+    "wait_max": 0.0,
+    "imbalance": 0.014982950701660707,
+    "entries": [
+      {
+        "Job": 3,
+        "Operation": 1,
+        "Resource": "OR-3",
+        "Personnel": "AN-1",
+        "Start": 0.0,
+        "ActualStart": 2.0,
+        "ProcessingEnd": 15.0,
+        "Finish": 15.0,
+        "SetupUsed": 2.0,
+        "TransitionUsed": 1.5,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 3,
+        "Operation": 2,
+        "Resource": "OR-1",
+        "Personnel": "SU-1",
+        "Start": 15.0,
+        "ActualStart": 15.0,
+        "ProcessingEnd": 32.0,
+        "Finish": 35.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 5,
+        "Operation": 1,
+        "Resource": "OR-3",
+        "Personnel": "AN-2",
+        "Start": 15.0,
+        "ActualStart": 17.5,
+        "ProcessingEnd": 31.5,
+        "Finish": 54.0,
+        "SetupUsed": 2.5,
+        "TransitionUsed": 1.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 5,
+        "Operation": 2,
+        "Resource": "OR-3",
+        "Personnel": "SU-2",
+        "Start": 31.5,
+        "ActualStart": 31.5,
+        "ProcessingEnd": 50.5,
+        "Finish": 54.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 2,
+        "Operation": 1,
+        "Resource": "OR-2",
+        "Personnel": "AN-3",
+        "Start": 0.0,
+        "ActualStart": 1.5,
+        "ProcessingEnd": 12.5,
+        "Finish": 39.0,
+        "SetupUsed": 1.5,
+        "TransitionUsed": 1.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 2,
+        "Operation": 2,
+        "Resource": "OR-2",
+        "Personnel": "SU-3",
+        "Start": 12.5,
+        "ActualStart": 12.5,
+        "ProcessingEnd": 36.5,
+        "Finish": 39.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 2.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 4,
+        "Operation": 1,
+        "Resource": "OR-1",
+        "Personnel": "AN-1",
+        "Start": 35.0,
+        "ActualStart": 37.0,
+        "ProcessingEnd": 44.5,
+        "Finish": 73.5,
+        "SetupUsed": 1.0,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 4,
+        "Operation": 2,
+        "Resource": "OR-1",
+        "Personnel": "SU-5",
+        "Start": 44.5,
+        "ActualStart": 44.5,
+        "ProcessingEnd": 71.5,
+        "Finish": 73.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 2.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 1,
+        "Operation": 1,
+        "Resource": "OR-2",
+        "Personnel": "AN-2",
+        "Start": 39.0,
+        "ActualStart": 40.0,
+        "ProcessingEnd": 49.0,
+        "Finish": 71.0,
+        "SetupUsed": 1.0,
+        "TransitionUsed": 1.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 1,
+        "Operation": 2,
+        "Resource": "OR-2",
+        "Personnel": "SU-1",
+        "Start": 49.0,
+        "ActualStart": 49.0,
+        "ProcessingEnd": 69.0,
+        "Finish": 71.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 2.0,
+        "Wait": 0.0
+      }
+    ],
+    "loads": {
+      "OR-1": 58.5,
+      "OR-2": 71.0,
+      "OR-3": 54.0
+    },
+    "wait_limit_exceedances": 0
+  },
+  "solution": {
+    "job_sequence_base": [
+      3,
+      5,
+      2,
+      4,
+      1
+    ],
+    "room_assignment": {
+      "1": {
+        "1": "OR-2",
+        "2": "OR-2"
+      },
+      "2": {
+        "1": "OR-2",
+        "2": "OR-2"
+      },
+      "3": {
+        "1": "OR-3",
+        "2": "OR-1"
+      },
+      "4": {
+        "1": "OR-1",
+        "2": "OR-1"
+      },
+      "5": {
+        "1": "OR-3",
+        "2": "OR-3"
+      }
+    }
+  },
+  "curve": [
+    {
+      "evaluation": 1,
+      "best_f": 84.09019218048496
+    },
+    {
+      "evaluation": 10,
+      "best_f": 80.80864518804044
+    },
+    {
+      "evaluation": 20,
+      "best_f": 80.80864518804044
+    },
+    {
+      "evaluation": 25,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 30,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 40,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 50,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 60,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 70,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 80,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 90,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 100,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 110,
+      "best_f": 77.27921321328556
+    },
+    {
+      "evaluation": 111,
+      "best_f": 77.27920521328556
+    },
+    {
+      "evaluation": 120,
+      "best_f": 77.27920521328556
+    },
+    {
+      "evaluation": 130,
+      "best_f": 77.27920521328556
+    },
+    {
+      "evaluation": 140,
+      "best_f": 77.27920521328556
+    },
+    {
+      "evaluation": 150,
+      "best_f": 77.27920521328556
+    },
+    {
+      "evaluation": 159,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 160,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 170,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 180,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 190,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 200,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 210,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 220,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 230,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 240,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 250,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 260,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 270,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 280,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 290,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 300,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 310,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 320,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 330,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 340,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 350,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 360,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 370,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 380,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 390,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 400,
+      "best_f": 75.61693521205873
+    },
+    {
+      "evaluation": 410,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 420,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 430,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 440,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 450,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 460,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 470,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 480,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 490,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 500,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 510,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 520,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 530,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 540,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 550,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 560,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 570,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 580,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 590,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 600,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 610,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 620,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 630,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 640,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 650,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 660,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 670,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 680,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 690,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 700,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 710,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 720,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 730,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 740,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 750,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 760,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 770,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 780,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 790,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 800,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 810,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 820,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 830,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 840,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 850,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 860,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 870,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 880,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 890,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 900,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 910,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 920,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 930,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 940,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 950,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 960,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 970,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 980,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 990,
+      "best_f": 74.99854557016607
+    },
+    {
+      "evaluation": 1000,
+      "best_f": 74.99854557016607
+    }
+  ],
+  "operator_diagnostics": {
+    "q": [
+      [
+        4.107569213884683,
+        8.1904493168327,
+        4.139579286564766,
+        9.573377778559617,
+        3.614550847323663,
+        13.124722287079258,
+        13.569368676690337
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.15,
+        0.0,
+        0.6230019764303378,
+        0.27100905050477936,
+        0.2921493628837687,
+        0.17656268514875734,
+        3.298650373432451
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.2679375,
+        0.0,
+        -0.17606262225279407,
+        0.0,
+        -0.07926076701590015,
+        2.3995049928728607,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "actions": [
+      6,
+      23,
+      9,
+      7,
+      6,
+      40,
+      101
+    ],
+    "evaluations": [
+      6,
+      23,
+      9,
+      7,
+      6,
+      394,
+      505
+    ],
+    "improvements": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      3
+    ],
+    "generations": 4
+  },
+  "horizon_minutes": 480.0,
+  "phase": "pilot",
+  "source_hash": "3a15e8450d09ea8a3e22e561365c9b86d66403f99e889dc8b047df801026afeb",
+  "usable_for_final": false
+}

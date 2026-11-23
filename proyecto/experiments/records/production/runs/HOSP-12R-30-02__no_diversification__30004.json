@@ -1,0 +1,1798 @@
+{
+  "instance_id": "HOSP-12R-30-02",
+  "instance_digest": "c38951d7f55ae8aef6c321cc49eea638fb873940255b6ddbe882fbdf978acae0",
+  "method": "no_diversification",
+  "seed": 30004,
+  "parameters": {
+    "population": 50.0,
+    "alpha": 0.2734,
+    "discount": 0.6752,
+    "epsilon": 0.1129,
+    "tau": 75.802
+  },
+  "budget": 6000,
+  "evaluations": 6000,
+  "rejected": 0,
+  "status": "completed",
+  "error": null,
+  "validation_errors": [],
+  "objective": 250.16629944602082,
+  "wall_seconds": 1.292937999998685,
+  "cpu_seconds": 1.265625,
+  "result": {
+    "f": 250.16629944602082,
+    "makespan": 242.0,
+    "wait_sum": 1.5,
+    "wait_max": 1.5,
+    "imbalance": 0.05311386446020829,
+    "entries": [
+      {
+        "Job": 2,
+        "Operation": 1,
+        "Resource": "OR-11",
+        "Personnel": "AN-1",
+        "Start": 0.0,
+        "ActualStart": 3.0,
+        "ProcessingEnd": 13.0,
+        "Finish": 50.5,
+        "SetupUsed": 1.5,
+        "TransitionUsed": 3.0,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 2,
+        "Operation": 2,
+        "Resource": "OR-11",
+        "Personnel": "SU-1",
+        "Start": 13.0,
+        "ActualStart": 13.0,
+        "ProcessingEnd": 47.0,
+        "Finish": 50.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 5,
+        "Operation": 1,
+        "Resource": "OR-3",
+        "Personnel": "AN-2",
+        "Start": 0.0,
+        "ActualStart": 3.0,
+        "ProcessingEnd": 19.0,
+        "Finish": 78.5,
+        "SetupUsed": 3.0,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 5,
+        "Operation": 2,
+        "Resource": "OR-3",
+        "Personnel": "SU-2",
+        "Start": 19.0,
+        "ActualStart": 19.0,
+        "ProcessingEnd": 73.0,
+        "Finish": 78.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 5.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 11,
+        "Operation": 1,
+        "Resource": "OR-4",
+        "Personnel": "AN-3",
+        "Start": 0.0,
+        "ActualStart": 3.5,
+        "ProcessingEnd": 22.5,
+        "Finish": 90.0,
+        "SetupUsed": 3.5,
+        "TransitionUsed": 1.0,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 11,
+        "Operation": 2,
+        "Resource": "OR-4",
+        "Personnel": "SU-12",
+        "Start": 22.5,
+        "ActualStart": 22.5,
+        "ProcessingEnd": 83.5,
+        "Finish": 90.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 6.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 21,
+        "Operation": 1,
+        "Resource": "OR-8",
+        "Personnel": "AN-5",
+        "Start": 0.0,
+        "ActualStart": 2.5,
+        "ProcessingEnd": 15.0,
+        "Finish": 62.5,
+        "SetupUsed": 2.5,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 21,
+        "Operation": 2,
+        "Resource": "OR-8",
+        "Personnel": "SU-3",
+        "Start": 15.0,
+        "ActualStart": 15.0,
+        "ProcessingEnd": 58.0,
+        "Finish": 62.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 4.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 20,
+        "Operation": 1,
+        "Resource": "OR-3",
+        "Personnel": "AN-4",
+        "Start": 78.5,
+        "ActualStart": 83.0,
+        "ProcessingEnd": 103.5,
+        "Finish": 174.5,
+        "SetupUsed": 4.5,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 20,
+        "Operation": 2,
+        "Resource": "OR-3",
+        "Personnel": "SU-8",
+        "Start": 103.5,
+        "ActualStart": 103.5,
+        "ProcessingEnd": 167.5,
+        "Finish": 174.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 7.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 13,
+        "Operation": 1,
+        "Resource": "OR-5",
+        "Personnel": "AN-7",
+        "Start": 0.0,
+        "ActualStart": 4.5,
+        "ProcessingEnd": 25.5,
+        "Finish": 101.0,
+        "SetupUsed": 4.5,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 13,
+        "Operation": 2,
+        "Resource": "OR-5",
+        "Personnel": "SU-14",
+        "Start": 25.5,
+        "ActualStart": 25.5,
+        "ProcessingEnd": 93.5,
+        "Finish": 101.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 7.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 26,
+        "Operation": 1,
+        "Resource": "OR-12",
+        "Personnel": "AN-8",
+        "Start": 0.0,
+        "ActualStart": 3.0,
+        "ProcessingEnd": 14.5,
+        "Finish": 58.5,
+        "SetupUsed": 2.0,
+        "TransitionUsed": 3.0,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 26,
+        "Operation": 2,
+        "Resource": "OR-12",
+        "Personnel": "SU-6",
+        "Start": 14.5,
+        "ActualStart": 14.5,
+        "ProcessingEnd": 54.5,
+        "Finish": 58.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 4.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 1,
+        "Operation": 1,
+        "Resource": "OR-1",
+        "Personnel": "AN-1",
+        "Start": 10.5,
+        "ActualStart": 13.0,
+        "ProcessingEnd": 28.5,
+        "Finish": 29.5,
+        "SetupUsed": 2.5,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 1,
+        "Operation": 2,
+        "Resource": "OR-10",
+        "Personnel": "SU-5",
+        "Start": 28.5,
+        "ActualStart": 28.5,
+        "ProcessingEnd": 73.5,
+        "Finish": 78.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 5.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 17,
+        "Operation": 1,
+        "Resource": "OR-7",
+        "Personnel": "AN-6",
+        "Start": 0.0,
+        "ActualStart": 4.0,
+        "ProcessingEnd": 22.5,
+        "Finish": 88.0,
+        "SetupUsed": 4.0,
+        "TransitionUsed": 1.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 17,
+        "Operation": 2,
+        "Resource": "OR-7",
+        "Personnel": "SU-18",
+        "Start": 22.5,
+        "ActualStart": 22.5,
+        "ProcessingEnd": 81.5,
+        "Finish": 88.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 6.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 4,
+        "Operation": 1,
+        "Resource": "OR-2",
+        "Personnel": "AN-3",
+        "Start": 20.5,
+        "ActualStart": 22.5,
+        "ProcessingEnd": 35.5,
+        "Finish": 87.5,
+        "SetupUsed": 2.0,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 4,
+        "Operation": 2,
+        "Resource": "OR-2",
+        "Personnel": "SU-4",
+        "Start": 35.5,
+        "ActualStart": 35.5,
+        "ProcessingEnd": 82.5,
+        "Finish": 87.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 5.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 15,
+        "Operation": 1,
+        "Resource": "OR-10",
+        "Personnel": "AN-2",
+        "Start": 78.5,
+        "ActualStart": 81.5,
+        "ProcessingEnd": 97.0,
+        "Finish": 153.5,
+        "SetupUsed": 3.0,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 15,
+        "Operation": 2,
+        "Resource": "OR-10",
+        "Personnel": "SU-16",
+        "Start": 97.0,
+        "ActualStart": 97.0,
+        "ProcessingEnd": 148.0,
+        "Finish": 153.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 5.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 8,
+        "Operation": 1,
+        "Resource": "OR-7",
+        "Personnel": "AN-8",
+        "Start": 88.0,
+        "ActualStart": 90.5,
+        "ProcessingEnd": 104.0,
+        "Finish": 153.5,
+        "SetupUsed": 2.5,
+        "TransitionUsed": 1.5,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 8,
+        "Operation": 2,
+        "Resource": "OR-7",
+        "Personnel": "SU-9",
+        "Start": 104.0,
+        "ActualStart": 104.0,
+        "ProcessingEnd": 149.0,
+        "Finish": 153.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 4.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 7,
+        "Operation": 1,
+        "Resource": "OR-6",
+        "Personnel": "AN-7",
+        "Start": 21.5,
+        "ActualStart": 25.5,
+        "ProcessingEnd": 45.5,
+        "Finish": 119.0,
+        "SetupUsed": 4.0,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 7,
+        "Operation": 2,
+        "Resource": "OR-6",
+        "Personnel": "SU-1",
+        "Start": 47.0,
+        "ActualStart": 47.0,
+        "ProcessingEnd": 112.0,
+        "Finish": 119.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 7.0,
+        "Wait": 1.5
+      },
+      {
+        "Job": 10,
+        "Operation": 1,
+        "Resource": "OR-9",
+        "Personnel": "AN-1",
+        "Start": 25.5,
+        "ActualStart": 28.5,
+        "ProcessingEnd": 39.5,
+        "Finish": 81.5,
+        "SetupUsed": 2.0,
+        "TransitionUsed": 3.0,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 10,
+        "Operation": 2,
+        "Resource": "OR-9",
+        "Personnel": "SU-11",
+        "Start": 39.5,
+        "ActualStart": 39.5,
+        "ProcessingEnd": 77.5,
+        "Finish": 81.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 4.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 14,
+        "Operation": 1,
+        "Resource": "OR-11",
+        "Personnel": "AN-5",
+        "Start": 50.5,
+        "ActualStart": 54.0,
+        "ProcessingEnd": 63.5,
+        "Finish": 102.0,
+        "SetupUsed": 1.5,
+        "TransitionUsed": 3.5,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 14,
+        "Operation": 2,
+        "Resource": "OR-11",
+        "Personnel": "SU-15",
+        "Start": 63.5,
+        "ActualStart": 63.5,
+        "ProcessingEnd": 98.5,
+        "Finish": 102.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 23,
+        "Operation": 1,
+        "Resource": "OR-11",
+        "Personnel": "AN-1",
+        "Start": 102.0,
+        "ActualStart": 105.5,
+        "ProcessingEnd": 115.5,
+        "Finish": 156.5,
+        "SetupUsed": 1.0,
+        "TransitionUsed": 3.5,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 23,
+        "Operation": 2,
+        "Resource": "OR-11",
+        "Personnel": "SU-4",
+        "Start": 115.5,
+        "ActualStart": 115.5,
+        "ProcessingEnd": 152.5,
+        "Finish": 156.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 4.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 24,
+        "Operation": 1,
+        "Resource": "OR-4",
+        "Personnel": "AN-6",
+        "Start": 90.0,
+        "ActualStart": 94.0,
+        "ProcessingEnd": 114.0,
+        "Finish": 184.0,
+        "SetupUsed": 4.0,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 24,
+        "Operation": 2,
+        "Resource": "OR-4",
+        "Personnel": "SU-6",
+        "Start": 114.0,
+        "ActualStart": 114.0,
+        "ProcessingEnd": 177.0,
+        "Finish": 184.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 7.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 28,
+        "Operation": 1,
+        "Resource": "OR-9",
+        "Personnel": "AN-2",
+        "Start": 94.0,
+        "ActualStart": 97.0,
+        "ProcessingEnd": 107.5,
+        "Finish": 147.0,
+        "SetupUsed": 1.5,
+        "TransitionUsed": 3.0,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 28,
+        "Operation": 2,
+        "Resource": "OR-9",
+        "Personnel": "SU-7",
+        "Start": 107.5,
+        "ActualStart": 107.5,
+        "ProcessingEnd": 143.5,
+        "Finish": 147.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 18,
+        "Operation": 1,
+        "Resource": "OR-2",
+        "Personnel": "AN-9",
+        "Start": 87.5,
+        "ActualStart": 90.5,
+        "ProcessingEnd": 101.0,
+        "Finish": 140.5,
+        "SetupUsed": 1.5,
+        "TransitionUsed": 3.0,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 18,
+        "Operation": 2,
+        "Resource": "OR-2",
+        "Personnel": "SU-19",
+        "Start": 101.0,
+        "ActualStart": 101.0,
+        "ProcessingEnd": 137.0,
+        "Finish": 140.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 3,
+        "Operation": 1,
+        "Resource": "OR-12",
+        "Personnel": "AN-3",
+        "Start": 58.5,
+        "ActualStart": 62.0,
+        "ProcessingEnd": 80.0,
+        "Finish": 144.0,
+        "SetupUsed": 3.5,
+        "TransitionUsed": 1.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 3,
+        "Operation": 2,
+        "Resource": "OR-12",
+        "Personnel": "SU-3",
+        "Start": 80.0,
+        "ActualStart": 80.0,
+        "ProcessingEnd": 138.0,
+        "Finish": 144.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 6.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 12,
+        "Operation": 1,
+        "Resource": "OR-1",
+        "Personnel": "AN-3",
+        "Start": 77.5,
+        "ActualStart": 80.0,
+        "ProcessingEnd": 92.0,
+        "Finish": 137.0,
+        "SetupUsed": 2.0,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 12,
+        "Operation": 2,
+        "Resource": "OR-1",
+        "Personnel": "SU-13",
+        "Start": 92.0,
+        "ActualStart": 92.0,
+        "ProcessingEnd": 133.0,
+        "Finish": 137.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 4.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 30,
+        "Operation": 1,
+        "Resource": "OR-8",
+        "Personnel": "AN-7",
+        "Start": 62.5,
+        "ActualStart": 66.5,
+        "ProcessingEnd": 85.5,
+        "Finish": 154.5,
+        "SetupUsed": 4.0,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 30,
+        "Operation": 2,
+        "Resource": "OR-8",
+        "Personnel": "SU-5",
+        "Start": 85.5,
+        "ActualStart": 85.5,
+        "ProcessingEnd": 147.5,
+        "Finish": 154.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 7.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 29,
+        "Operation": 1,
+        "Resource": "OR-5",
+        "Personnel": "AN-7",
+        "Start": 101.0,
+        "ActualStart": 104.5,
+        "ProcessingEnd": 120.5,
+        "Finish": 180.5,
+        "SetupUsed": 3.5,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 29,
+        "Operation": 2,
+        "Resource": "OR-5",
+        "Personnel": "SU-10",
+        "Start": 120.5,
+        "ActualStart": 120.5,
+        "ProcessingEnd": 174.5,
+        "Finish": 180.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 6.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 9,
+        "Operation": 1,
+        "Resource": "OR-8",
+        "Personnel": "AN-5",
+        "Start": 154.5,
+        "ActualStart": 158.0,
+        "ProcessingEnd": 175.0,
+        "Finish": 237.0,
+        "SetupUsed": 3.5,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 9,
+        "Operation": 2,
+        "Resource": "OR-8",
+        "Personnel": "SU-4",
+        "Start": 175.0,
+        "ActualStart": 175.0,
+        "ProcessingEnd": 231.0,
+        "Finish": 237.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 6.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 27,
+        "Operation": 1,
+        "Resource": "OR-10",
+        "Personnel": "AN-9",
+        "Start": 153.5,
+        "ActualStart": 157.5,
+        "ProcessingEnd": 175.5,
+        "Finish": 242.0,
+        "SetupUsed": 4.0,
+        "TransitionUsed": 1.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 27,
+        "Operation": 2,
+        "Resource": "OR-10",
+        "Personnel": "SU-9",
+        "Start": 175.5,
+        "ActualStart": 175.5,
+        "ProcessingEnd": 235.5,
+        "Finish": 242.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 6.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 22,
+        "Operation": 1,
+        "Resource": "OR-12",
+        "Personnel": "AN-3",
+        "Start": 144.0,
+        "ActualStart": 147.5,
+        "ProcessingEnd": 164.5,
+        "Finish": 165.5,
+        "SetupUsed": 3.5,
+        "TransitionUsed": 1.5,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 22,
+        "Operation": 2,
+        "Resource": "OR-6",
+        "Personnel": "SU-3",
+        "Start": 164.5,
+        "ActualStart": 164.5,
+        "ProcessingEnd": 221.5,
+        "Finish": 227.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 6.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 6,
+        "Operation": 1,
+        "Resource": "OR-4",
+        "Personnel": "AN-6",
+        "Start": 184.0,
+        "ActualStart": 187.5,
+        "ProcessingEnd": 196.5,
+        "Finish": 197.0,
+        "SetupUsed": 1.0,
+        "TransitionUsed": 3.5,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 6,
+        "Operation": 2,
+        "Resource": "OR-5",
+        "Personnel": "SU-7",
+        "Start": 196.5,
+        "ActualStart": 196.5,
+        "ProcessingEnd": 227.5,
+        "Finish": 230.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 25,
+        "Operation": 1,
+        "Resource": "OR-12",
+        "Personnel": "AN-8",
+        "Start": 165.5,
+        "ActualStart": 168.5,
+        "ProcessingEnd": 183.5,
+        "Finish": 184.0,
+        "SetupUsed": 3.0,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 25,
+        "Operation": 2,
+        "Resource": "OR-2",
+        "Personnel": "SU-2",
+        "Start": 183.5,
+        "ActualStart": 183.5,
+        "ProcessingEnd": 233.5,
+        "Finish": 239.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 5.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 16,
+        "Operation": 1,
+        "Resource": "OR-9",
+        "Personnel": "AN-1",
+        "Start": 147.0,
+        "ActualStart": 149.5,
+        "ProcessingEnd": 163.5,
+        "Finish": 217.5,
+        "SetupUsed": 2.5,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 0.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 16,
+        "Operation": 2,
+        "Resource": "OR-9",
+        "Personnel": "SU-17",
+        "Start": 163.5,
+        "ActualStart": 163.5,
+        "ProcessingEnd": 212.5,
+        "Finish": 217.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 5.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 19,
+        "Operation": 1,
+        "Resource": "OR-1",
+        "Personnel": "AN-2",
+        "Start": 137.0,
+        "ActualStart": 140.5,
+        "ProcessingEnd": 157.0,
+        "Finish": 218.0,
+        "SetupUsed": 3.5,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 1.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 19,
+        "Operation": 2,
+        "Resource": "OR-1",
+        "Personnel": "SU-20",
+        "Start": 157.0,
+        "ActualStart": 157.0,
+        "ProcessingEnd": 212.0,
+        "Finish": 218.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 6.0,
+        "Wait": 0.0
+      }
+    ],
+    "loads": {
+      "OR-1": 159.5,
+      "OR-2": 175.5,
+      "OR-3": 174.5,
+      "OR-4": 197.0,
+      "OR-5": 214.5,
+      "OR-6": 160.5,
+      "OR-7": 153.5,
+      "OR-8": 237.0,
+      "OR-9": 179.5,
+      "OR-10": 213.5,
+      "OR-11": 156.5,
+      "OR-12": 184.0
+    },
+    "wait_limit_exceedances": 0
+  },
+  "solution": {
+    "job_sequence_base": [
+      2,
+      5,
+      11,
+      21,
+      20,
+      13,
+      26,
+      1,
+      17,
+      4,
+      15,
+      8,
+      7,
+      10,
+      14,
+      23,
+      24,
+      28,
+      18,
+      3,
+      12,
+      30,
+      29,
+      9,
+      27,
+      22,
+      6,
+      25,
+      16,
+      19
+    ],
+    "room_assignment": {
+      "1": {
+        "1": "OR-1",
+        "2": "OR-10"
+      },
+      "2": {
+        "1": "OR-11",
+        "2": "OR-11"
+      },
+      "3": {
+        "1": "OR-12",
+        "2": "OR-12"
+      },
+      "4": {
+        "1": "OR-2",
+        "2": "OR-2"
+      },
+      "5": {
+        "1": "OR-3",
+        "2": "OR-3"
+      },
+      "6": {
+        "1": "OR-4",
+        "2": "OR-5"
+      },
+      "7": {
+        "1": "OR-6",
+        "2": "OR-6"
+      },
+      "8": {
+        "1": "OR-7",
+        "2": "OR-7"
+      },
+      "9": {
+        "1": "OR-8",
+        "2": "OR-8"
+      },
+      "10": {
+        "1": "OR-9",
+        "2": "OR-9"
+      },
+      "11": {
+        "1": "OR-4",
+        "2": "OR-4"
+      },
+      "12": {
+        "1": "OR-1",
+        "2": "OR-1"
+      },
+      "13": {
+        "1": "OR-5",
+        "2": "OR-5"
+      },
+      "14": {
+        "1": "OR-11",
+        "2": "OR-11"
+      },
+      "15": {
+        "1": "OR-10",
+        "2": "OR-10"
+      },
+      "16": {
+        "1": "OR-9",
+        "2": "OR-9"
+      },
+      "17": {
+        "1": "OR-7",
+        "2": "OR-7"
+      },
+      "18": {
+        "1": "OR-2",
+        "2": "OR-2"
+      },
+      "19": {
+        "1": "OR-1",
+        "2": "OR-1"
+      },
+      "20": {
+        "1": "OR-3",
+        "2": "OR-3"
+      },
+      "21": {
+        "1": "OR-8",
+        "2": "OR-8"
+      },
+      "22": {
+        "1": "OR-12",
+        "2": "OR-6"
+      },
+      "23": {
+        "1": "OR-11",
+        "2": "OR-11"
+      },
+      "24": {
+        "1": "OR-4",
+        "2": "OR-4"
+      },
+      "25": {
+        "1": "OR-12",
+        "2": "OR-2"
+      },
+      "26": {
+        "1": "OR-12",
+        "2": "OR-12"
+      },
+      "27": {
+        "1": "OR-10",
+        "2": "OR-10"
+      },
+      "28": {
+        "1": "OR-9",
+        "2": "OR-9"
+      },
+      "29": {
+        "1": "OR-5",
+        "2": "OR-5"
+      },
+      "30": {
+        "1": "OR-8",
+        "2": "OR-8"
+      }
+    }
+  },
+  "curve": [
+    {
+      "evaluation": 1,
+      "best_f": 589.8773779091601
+    },
+    {
+      "evaluation": 6,
+      "best_f": 534.7406409073842
+    },
+    {
+      "evaluation": 31,
+      "best_f": 527.364087602795
+    },
+    {
+      "evaluation": 40,
+      "best_f": 471.58414317149015
+    },
+    {
+      "evaluation": 52,
+      "best_f": 451.5136496308091
+    },
+    {
+      "evaluation": 60,
+      "best_f": 451.5136496308091
+    },
+    {
+      "evaluation": 61,
+      "best_f": 414.4671461319644
+    },
+    {
+      "evaluation": 120,
+      "best_f": 414.4671461319644
+    },
+    {
+      "evaluation": 180,
+      "best_f": 414.4671461319644
+    },
+    {
+      "evaluation": 223,
+      "best_f": 366.0420468911908
+    },
+    {
+      "evaluation": 240,
+      "best_f": 366.0420468911908
+    },
+    {
+      "evaluation": 300,
+      "best_f": 366.0420468911908
+    },
+    {
+      "evaluation": 303,
+      "best_f": 355.1737241928232
+    },
+    {
+      "evaluation": 360,
+      "best_f": 355.1737241928232
+    },
+    {
+      "evaluation": 400,
+      "best_f": 289.6683300573691
+    },
+    {
+      "evaluation": 420,
+      "best_f": 289.6683300573691
+    },
+    {
+      "evaluation": 480,
+      "best_f": 289.6683300573691
+    },
+    {
+      "evaluation": 540,
+      "best_f": 289.6683300573691
+    },
+    {
+      "evaluation": 554,
+      "best_f": 283.0166516656462
+    },
+    {
+      "evaluation": 573,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 600,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 660,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 720,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 780,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 840,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 900,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 960,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1020,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1080,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1140,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1200,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1260,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1320,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1380,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1440,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1500,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1560,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1620,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1680,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1740,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1800,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1860,
+      "best_f": 275.51662666564613
+    },
+    {
+      "evaluation": 1889,
+      "best_f": 268.78975320263675
+    },
+    {
+      "evaluation": 1920,
+      "best_f": 268.78975320263675
+    },
+    {
+      "evaluation": 1980,
+      "best_f": 268.78975320263675
+    },
+    {
+      "evaluation": 2040,
+      "best_f": 268.78975320263675
+    },
+    {
+      "evaluation": 2100,
+      "best_f": 268.78975320263675
+    },
+    {
+      "evaluation": 2130,
+      "best_f": 264.76599198009154
+    },
+    {
+      "evaluation": 2156,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2160,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2220,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2280,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2340,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2400,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2460,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2520,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2580,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2640,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2700,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2760,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2820,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2880,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 2940,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3000,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3060,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3120,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3180,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3240,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3300,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3360,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3420,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3480,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3540,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3600,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3660,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3720,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3780,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3840,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3900,
+      "best_f": 259.2660059800915
+    },
+    {
+      "evaluation": 3948,
+      "best_f": 256.78823498732135
+    },
+    {
+      "evaluation": 3960,
+      "best_f": 256.78823498732135
+    },
+    {
+      "evaluation": 3997,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4020,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4080,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4140,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4200,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4260,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4320,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4380,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4440,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4500,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4560,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4620,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4680,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4740,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4800,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4860,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4920,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 4980,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 5040,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 5100,
+      "best_f": 256.6094775611056
+    },
+    {
+      "evaluation": 5106,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5160,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5220,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5280,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5340,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5400,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5460,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5520,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5580,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5640,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5700,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5760,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5820,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5880,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 5940,
+      "best_f": 250.16629944602082
+    },
+    {
+      "evaluation": 6000,
+      "best_f": 250.16629944602082
+    }
+  ],
+  "operator_diagnostics": {
+    "q": [
+      [
+        9.138499480094746,
+        0.0,
+        0.0,
+        8.717750792425086,
+        8.02898449505367,
+        8.73054243372316,
+        27.2291198363385
+      ],
+      [
+        0.0,
+        63.663323449248324,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        17.20171360896648
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.8588186050133553,
+        0.0,
+        0.0,
+        29.53838440980222,
+        1.0847159162139308
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.2734,
+        0.0,
+        3.4253118092614145,
+        0.0,
+        12.413162869449684,
+        1.1095721778320327,
+        10.591750101700779
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    ],
+    "actions": [
+      2,
+      49,
+      10,
+      1,
+      13,
+      7,
+      95
+    ],
+    "evaluations": [
+      2,
+      49,
+      10,
+      1,
+      13,
+      3045,
+      2830
+    ],
+    "improvements": [
+      0,
+      3,
+      0,
+      0,
+      0,
+      2,
+      5
+    ],
+    "generations": 4
+  },
+  "horizon_minutes": 480.0,
+  "phase": "test",
+  "source_hash": "ab0a6267bfb5e295589be2a3d7551400a7db44b56847bbd9f31904454a82ed37",
+  "usable_for_final": true,
+  "execution": {
+    "mode": "process_parallel",
+    "workers": 4,
+    "threads_per_worker": 1,
+    "coordinator_sha256": "913cf67973a871ce50012eaa0e29da79b80afd6c02eb761815621f73843c7fee",
+    "wall_time_condition": "concurrent runs; distinguish from sequential pilot timings"
+  }
+}

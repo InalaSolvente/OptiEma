@@ -1,0 +1,29 @@
+ENTREGA FINAL OII464
+
+Informe final: informe_final_QLMA.pdf y fuente autónomo informe_final_QLMA.tex.
+Resultados y discusión: páginas9–11 (3). Conclusión: página12 (1). Total13.
+Compilar con pdflatex dos veces o tectonic; paquetes estándar y pgfplots, sin
+imágenes ni bibliografía externas. Compilación del editor comprobada.
+
+Defensa: defensa_QLMA.pptx, 12 diapositivas, notas y cinco gráficos editables
+con datos incrustados. Guion: guion_defensa.txt. Objetivo14 minutos20 segundos;
+ensayar para respetar el máximo de15 minutos.
+
+Respaldo: datos/ contiene tablas, gráficos y sensibilidad de signos post hoc.
+proyecto/ conserva código, 37instancias, particiones, configuraciones, pilotos,
+3998registros de calibración y6960registros finales. parallel_runner.py documenta
+la coordinación en cuatro procesos. Los runtimes Python/R no van incluidos;
+versiones y rutas originales en proyecto/experiments/records/runtime_manifest.json.
+Instalar requirements.txt y las versiones R/irace documentadas para repetir.
+
+Sensibilidad complementaria reproducible:
+ python analisis_sensibilidad_signos.py proyecto/experiments/records/production datos/supplemental_sign_tests.json
+Análisis principal: experiments/summarize.py, ejecutado desde proyecto/.
+
+Cambios declarados: presupuesto200*n en lugar del plan2000*n, H480min, preparación
+y transición explícitas, limpieza por operación, GA corregido y cuatro procesos.
+El memético fijo obtiene mejor RPD global que QL-MA. No se afirma superioridad
+del aprendizaje, prerregistro de signos post hoc ni beneficio clínico demostrado.
+
+La pauta pide subir el PDF al Aula y enviarlo a emanuel.vega@pucv.cl y
+lucas.erazo@pucv.cl. Estos archivos no se enviaron ni se subieron automáticamente.

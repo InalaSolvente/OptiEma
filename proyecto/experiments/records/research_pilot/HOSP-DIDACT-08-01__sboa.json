@@ -1,0 +1,753 @@
+{
+  "instance_id": "HOSP-DIDACT-08-01",
+  "instance_digest": "ab3735ff8bc7d9620f739499788de7e2c336202fb686764b37fa0ca6a153a694",
+  "method": "sboa",
+  "seed": 20000,
+  "parameters": {},
+  "budget": 1000,
+  "evaluations": 1000,
+  "rejected": 0,
+  "status": "completed",
+  "error": null,
+  "validation_errors": [],
+  "objective": 113.8671636470452,
+  "wall_seconds": 0.0997440000064671,
+  "cpu_seconds": 0.09375,
+  "result": {
+    "f": 113.8671636470452,
+    "makespan": 111.0,
+    "wait_sum": 0.0,
+    "wait_max": 0.0,
+    "imbalance": 0.028664766470452106,
+    "entries": [
+      {
+        "Job": 4,
+        "Operation": 1,
+        "Resource": "OR-3",
+        "Personnel": "AN-1",
+        "Start": 0.0,
+        "ActualStart": 2.0,
+        "ProcessingEnd": 9.0,
+        "Finish": 9.0,
+        "SetupUsed": 1.0,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 4,
+        "Operation": 2,
+        "Resource": "OR-1",
+        "Personnel": "SU-1",
+        "Start": 9.0,
+        "ActualStart": 9.0,
+        "ProcessingEnd": 35.0,
+        "Finish": 37.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 2.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 3,
+        "Operation": 1,
+        "Resource": "OR-4",
+        "Personnel": "AN-3",
+        "Start": 0.0,
+        "ActualStart": 2.0,
+        "ProcessingEnd": 14.5,
+        "Finish": 14.5,
+        "SetupUsed": 2.0,
+        "TransitionUsed": 1.5,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 3,
+        "Operation": 2,
+        "Resource": "OR-3",
+        "Personnel": "SU-3",
+        "Start": 14.5,
+        "ActualStart": 14.5,
+        "ProcessingEnd": 30.5,
+        "Finish": 33.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 2,
+        "Operation": 1,
+        "Resource": "OR-3",
+        "Personnel": "AN-2",
+        "Start": 33.5,
+        "ActualStart": 35.0,
+        "ProcessingEnd": 45.0,
+        "Finish": 45.0,
+        "SetupUsed": 1.5,
+        "TransitionUsed": 1.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 2,
+        "Operation": 2,
+        "Resource": "OR-2",
+        "Personnel": "SU-2",
+        "Start": 45.0,
+        "ActualStart": 45.0,
+        "ProcessingEnd": 68.0,
+        "Finish": 70.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 2.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 5,
+        "Operation": 1,
+        "Resource": "OR-4",
+        "Personnel": "AN-3",
+        "Start": 14.5,
+        "ActualStart": 17.0,
+        "ProcessingEnd": 31.0,
+        "Finish": 55.5,
+        "SetupUsed": 2.5,
+        "TransitionUsed": 1.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 5,
+        "Operation": 2,
+        "Resource": "OR-4",
+        "Personnel": "SU-3",
+        "Start": 31.0,
+        "ActualStart": 31.0,
+        "ProcessingEnd": 52.0,
+        "Finish": 55.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.5,
+        "Wait": 0.0
+      },
+      {
+        "Job": 7,
+        "Operation": 1,
+        "Resource": "OR-2",
+        "Personnel": "AN-1",
+        "Start": 70.5,
+        "ActualStart": 73.5,
+        "ProcessingEnd": 88.5,
+        "Finish": 111.0,
+        "SetupUsed": 3.0,
+        "TransitionUsed": 1.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 7,
+        "Operation": 2,
+        "Resource": "OR-2",
+        "Personnel": "SU-3",
+        "Start": 88.5,
+        "ActualStart": 88.5,
+        "ProcessingEnd": 107.0,
+        "Finish": 111.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 4.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 1,
+        "Operation": 1,
+        "Resource": "OR-1",
+        "Personnel": "AN-2",
+        "Start": 43.5,
+        "ActualStart": 45.0,
+        "ProcessingEnd": 53.5,
+        "Finish": 53.5,
+        "SetupUsed": 1.0,
+        "TransitionUsed": 1.5,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 1,
+        "Operation": 2,
+        "Resource": "OR-3",
+        "Personnel": "SU-1",
+        "Start": 53.5,
+        "ActualStart": 53.5,
+        "ProcessingEnd": 72.5,
+        "Finish": 74.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 2.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 8,
+        "Operation": 1,
+        "Resource": "OR-1",
+        "Personnel": "AN-4",
+        "Start": 53.5,
+        "ActualStart": 55.5,
+        "ProcessingEnd": 67.0,
+        "Finish": 67.0,
+        "SetupUsed": 2.0,
+        "TransitionUsed": 2.0,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 8,
+        "Operation": 2,
+        "Resource": "OR-4",
+        "Personnel": "SU-4",
+        "Start": 67.0,
+        "ActualStart": 67.0,
+        "ProcessingEnd": 92.0,
+        "Finish": 95.0,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 3.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 6,
+        "Operation": 1,
+        "Resource": "OR-1",
+        "Personnel": "AN-3",
+        "Start": 67.0,
+        "ActualStart": 69.5,
+        "ProcessingEnd": 79.0,
+        "Finish": 110.5,
+        "SetupUsed": 1.5,
+        "TransitionUsed": 2.5,
+        "CleanupUsed": 0.0,
+        "Wait": 0.0
+      },
+      {
+        "Job": 6,
+        "Operation": 2,
+        "Resource": "OR-1",
+        "Personnel": "SU-1",
+        "Start": 79.0,
+        "ActualStart": 79.0,
+        "ProcessingEnd": 108.0,
+        "Finish": 110.5,
+        "SetupUsed": 0.0,
+        "TransitionUsed": 0.0,
+        "CleanupUsed": 2.5,
+        "Wait": 0.0
+      }
+    ],
+    "loads": {
+      "OR-1": 95.0,
+      "OR-2": 66.0,
+      "OR-3": 60.5,
+      "OR-4": 83.5
+    },
+    "wait_limit_exceedances": 0
+  },
+  "solution": {
+    "job_sequence_base": [
+      4,
+      3,
+      2,
+      5,
+      7,
+      1,
+      8,
+      6
+    ],
+    "room_assignment": {
+      "1": {
+        "1": "OR-1",
+        "2": "OR-3"
+      },
+      "2": {
+        "1": "OR-3",
+        "2": "OR-2"
+      },
+      "3": {
+        "1": "OR-4",
+        "2": "OR-3"
+      },
+      "4": {
+        "1": "OR-3",
+        "2": "OR-1"
+      },
+      "5": {
+        "1": "OR-4",
+        "2": "OR-4"
+      },
+      "6": {
+        "1": "OR-1",
+        "2": "OR-1"
+      },
+      "7": {
+        "1": "OR-2",
+        "2": "OR-2"
+      },
+      "8": {
+        "1": "OR-1",
+        "2": "OR-4"
+      }
+    }
+  },
+  "curve": [
+    {
+      "evaluation": 1,
+      "best_f": 219.07452337247307
+    },
+    {
+      "evaluation": 10,
+      "best_f": 219.07452337247307
+    },
+    {
+      "evaluation": 14,
+      "best_f": 210.481555531137
+    },
+    {
+      "evaluation": 17,
+      "best_f": 186.88379626001563
+    },
+    {
+      "evaluation": 18,
+      "best_f": 160.95119597632066
+    },
+    {
+      "evaluation": 20,
+      "best_f": 160.95119597632066
+    },
+    {
+      "evaluation": 30,
+      "best_f": 160.95119597632066
+    },
+    {
+      "evaluation": 40,
+      "best_f": 160.95119597632066
+    },
+    {
+      "evaluation": 43,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 50,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 60,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 70,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 80,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 90,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 100,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 110,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 120,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 130,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 140,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 150,
+      "best_f": 132.42717464894758
+    },
+    {
+      "evaluation": 155,
+      "best_f": 130.11656267953808
+    },
+    {
+      "evaluation": 160,
+      "best_f": 130.11656267953808
+    },
+    {
+      "evaluation": 170,
+      "best_f": 130.11656267953808
+    },
+    {
+      "evaluation": 180,
+      "best_f": 130.11656267953808
+    },
+    {
+      "evaluation": 190,
+      "best_f": 130.11656267953808
+    },
+    {
+      "evaluation": 195,
+      "best_f": 126.45645017424802
+    },
+    {
+      "evaluation": 200,
+      "best_f": 126.45645017424802
+    },
+    {
+      "evaluation": 210,
+      "best_f": 126.45645017424802
+    },
+    {
+      "evaluation": 220,
+      "best_f": 126.45645017424802
+    },
+    {
+      "evaluation": 230,
+      "best_f": 126.45645017424802
+    },
+    {
+      "evaluation": 237,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 240,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 250,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 260,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 270,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 280,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 290,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 300,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 310,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 320,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 330,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 340,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 350,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 360,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 370,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 380,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 390,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 400,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 410,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 420,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 430,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 440,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 450,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 460,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 470,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 480,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 490,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 500,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 510,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 520,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 530,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 540,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 550,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 560,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 570,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 580,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 590,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 600,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 610,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 620,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 630,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 640,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 650,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 660,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 670,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 680,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 690,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 700,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 710,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 720,
+      "best_f": 125.15116156975763
+    },
+    {
+      "evaluation": 724,
+      "best_f": 124.54040732032213
+    },
+    {
+      "evaluation": 730,
+      "best_f": 124.54040732032213
+    },
+    {
+      "evaluation": 737,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 740,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 750,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 760,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 770,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 780,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 790,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 800,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 810,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 820,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 830,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 840,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 850,
+      "best_f": 116.69198802052158
+    },
+    {
+      "evaluation": 854,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 860,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 870,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 880,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 890,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 900,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 910,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 920,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 930,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 940,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 950,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 960,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 970,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 980,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 990,
+      "best_f": 113.8671636470452
+    },
+    {
+      "evaluation": 1000,
+      "best_f": 113.8671636470452
+    }
+  ],
+  "operator_diagnostics": {},
+  "horizon_minutes": 480.0,
+  "phase": "pilot",
+  "source_hash": "3a15e8450d09ea8a3e22e561365c9b86d66403f99e889dc8b047df801026afeb",
+  "usable_for_final": false
+}

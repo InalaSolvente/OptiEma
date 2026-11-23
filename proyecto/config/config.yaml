@@ -1,0 +1,54 @@
+# Default synthetic experiment with the historical four-algorithm reports.
+instance:
+  path: instances/hospital_12rooms/HOSP-12R-15-01.yaml
+
+experiment:
+  num_simulations: 2
+  n_jobs: -1
+  alpha_test: 0.05
+  std_factor_times: 0.15
+  save_pdf: false
+  output_dirs:
+    csv: results/elective/csv
+    plots: results/elective/plots
+
+algorithms:
+  alpha: 1.0e-6
+  beta: 0.5
+  gamma: 1.4
+  delta: 100.0
+  ga:
+    enabled: true
+    max_generations: 1000
+    population_size: 30
+    crossover_probability: 0.8
+    mutation_probability: 0.3
+    elitism_count: 2
+  dpso:
+    enabled: true
+    max_iterations: 1000
+    swarm_size: 30
+    w: 0.7
+    c1: 1.5
+    c2: 1.5
+    vel_low: -4.0
+    vel_high: 4.0
+  sboa:
+    enabled: true
+    max_iterations: 1000
+    population_size: 30
+    lower_bound: -5.0
+    upper_bound: 5.0
+  dmshoa:
+    enabled: true
+    max_iterations: 1000
+    population_size: 30
+    k: 0.3
+    lower_bound: -5.0
+    upper_bound: 5.0
+  mh:
+    enabled: false
+    max_iterations: 100
+    population_size: 20
+logging:
+  verbose_mode: false

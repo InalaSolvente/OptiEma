@@ -1,0 +1,102 @@
+EXPERIMENTO QL-MA / OII464 — ESTADO Y REPRODUCCIÓN
+
+La entrada del estudio es experiments/pipeline.py. main.py conserva la interfaz
+histórica del curso; no sustituye la comparación con evaluador común.
+
+Implementado: simulation/research_scheduler.py reserva ambas etapas y verifica
+los calendarios independientemente. Primera sala retenida hasta transferencia y
+limpieza si cambia de sala; sin limpieza intermedia para el mismo paciente en
+una sala. Makespan incluye toda limpieza final. El personal se ocupa durante
+procesamiento. Psi usa desviación poblacional de ocupación relativa a H=480 min
+más fracción de salas ociosas. H es una decisión experimental declarada.
+Transición/preparación: máximo en inducción y suma en cirugía, como el curso.
+max_wait se registra como diagnóstico: el modelo penaliza espera sin límite duro.
+
+algorithms/qlma.py: 27 estados, Q 27x7, recompensa original, siete operadores:
+intercambio crítico, reinserción tardía, balance de sala, co-localización, OX1 con
+élite, 2-opt y extracción/reinserción voraz de una cirugía crítica. A usa pesos
+fijos calibrables, B selección uniforme, C QL-MA completo y D sin diversificación.
+La búsqueda multivecino consume el mismo presupuesto y conserva la última mejora.
+GA se corrigió para usar una sola permutación y OX1 válido; duplicar la secuencia
+corrompía candidatos al mutarlos. Se registra la versión modificada, no se
+presentan estos cambios como el código original del curso.
+
+37 instancias conservadas: 4 didácticas, 12 STD, 21 HOSP-12R. No se recrearon.
+Validación: cuatro didácticas. Calibración: STD-20-01 y 12R-40-01.
+Piloto: STD-20-02 y 12R-40-02. Prueba: las otras 29 instancias.
+No se consultó desempeño de prueba para depurar ni calibrar.
+
+records/pilot/: diagnóstico histórico, 24 calendarios incompatibles con el
+bloqueo del informe. Se conserva para auditar; no usar como resultados finales.
+records/research_pilot/: piloto corregido, 48 corridas de 1000 evaluaciones.
+records/pipeline_smoke_<hash>/: comprobación real con irace y 5*n evaluaciones.
+Sus configuraciones NO se reutilizan en producción.
+records/production/: manifiesto congelado, calibraciones, parámetros elegidos,
+6960 corridas finales y análisis. Consultar status.json para estado real.
+
+irace oficial 4.5.1; R 4.5.2 extraído localmente, sin instalación global. Los
+binarios de paquetes se verificaron con MD5 del índice CRAN. irace declara haber
+sido compilado bajo R 4.5.3; su ejecución real se comprobó con R 4.5.2 y los avisos
+se conservan. Los runtimes locales están en las carpetas hermanas OptiEma-venv
+(Python y requirements fijados) y r-runtime (R y paquetes).
+
+Calibración independiente: 500 llamadas nominales por cada método/variante,
+200*n evaluaciones por llamada (presupuesto revisado en piloto). Consumo real registrado. Costo: f relativo a
+una referencia constructiva fija de la misma instancia de calibración.
+Semillas target: 100000000+(semilla_irace mod 100000000); piloto 20000;
+prueba 30000..30029. No se reutilizan las semillas preliminares 10000..10029.
+Dominios exactos en calibration/<método>/parameters.txt y calibrate.R.
+Población {20,30,50,80}; C/D mantienen rangos de la Entrega 2. A calibra siete
+pesos positivos [0.05,1.0]. B y SBOA calibran población; otros métodos agregan
+sus tasas de cruce/mutación, coeficientes de enjambre o k según corresponda.
+Los límites geométricos del curso permanecen fijos.
+
+Prueba: 29*30*8=6960 corridas; un hilo, ejecución secuencial, orden de métodos
+mezclado por bloque de forma reproducible. Registros atómicos con configuración,
+semilla, hashes, calendario, curva, componentes, intentos y tiempos CPU/pared.
+No se descartan fallos. Una corrida válida agota el presupuesto y pasa el
+validador. Cambiar fuentes detiene el proceso para evitar mezclar versiones.
+
+Al terminar: analysis/by_instance.csv, aggregate.csv, paired_tests.csv,
+global_tests.json, gráficos de RPD y convergencia. Holm se aplica a todas las
+comparaciones instancia/baseline y por separado a la ablación. Friedman usa
+instancias como bloques. El intervalo de Hodges-Lehmann es bootstrap percentil
+(2000 remuestras, semilla fija), no intervalo exacto de rangos. Revisar simetría
+de diferencias y patrón de fallos antes de formular conclusiones inferenciales.
+No se generan afirmaciones automáticas de superioridad ni beneficios clínicos.
+
+Desde la raíz del proyecto:
+  ../OptiEma-venv/Scripts/python.exe -m pytest tests experiments --basetemp=../pytest-optiema -q
+  ../OptiEma-venv/Scripts/python.exe experiments/research.py --pilot --budget 1000
+  ../OptiEma-venv/Scripts/python.exe experiments/pipeline.py --smoke --rscript ../r-runtime/R452/app/bin/Rscript.exe --rlib ../r-runtime/library452 --kappa 200
+  ../OptiEma-venv/Scripts/python.exe experiments/pipeline.py --rscript ../r-runtime/R452/app/bin/Rscript.exe --rlib ../r-runtime/library452 --kappa 200
+
+La última orden reanuda etapas y corridas concluidas con el mismo manifiesto.
+Para cambiar fuentes/protocolo, archivar production y comenzar otro estudio.
+No iniciar dos copias sobre la misma salida. Un proceso iniciado no equivale a
+un experimento terminado: leer status.json y los logs de calibración.
+
+DECISIÓN DE PRESUPUESTO ANTES DE PRODUCCIÓN
+Se revisó kappa una vez con las dos instancias reservadas de piloto y una
+semilla adicional 20002. budget_pilot/ conserva 32 corridas válidas con kappa
+100 y 200. No se demostró convergencia: duplicar presupuesto todavía altera
+resultados. Se fija kappa=200 por viabilidad temporal, aplicado también a todas
+las llamadas de calibración y a los ocho métodos finales; se mantienen las 30
+réplicas, 29 instancias de prueba y 500 llamadas nominales por método. El valor
+2000 queda como plan inicial, no como presupuesto ejecutado en producción.
+La opción --kappa 200 debe acompañar la orden de producción de este estudio.
+El piloto de una semilla no permite inferir estabilidad ni superioridad.
+
+COORDINACIÓN EN PARALELO
+La ejecución fue migrada a cuatro procesos, un hilo de cálculo por proceso.
+La coordinación está en ../parallel_runner.py, fuera del árbol congelado de
+algoritmos. No cambia evaluador, semillas, parámetros ni presupuesto.
+GA, dPSO y SBOA terminados se conservaron; dMShOA en curso fue adoptado sin
+reiniciar R. Otros métodos se calibran en paralelo. Las corridas finales usarán
+cuatro procesos aislados y guardarán esta condición en cada registro; sus
+tiempos de pared distinguen concurrencia de ejecución secuencial del piloto.
+Se verificó igualdad exacta de objetivo, solución y componentes para los ocho
+métodos entre ejecución secuencial y cuatro procesos sobre una instancia de
+validación. El manifiesto experimental y el hash de algoritmos siguen intactos.
+El coordinador activo se identifica en records/production/status.json; la
+transición y el hash del coordinador están en parallel_execution.json.
